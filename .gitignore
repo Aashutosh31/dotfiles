@@ -1,50 +1,45 @@
-# ==========================
 # OS
-# ==========================
 .DS_Store
 Thumbs.db
 
-# ==========================
-# Git
-# ==========================
+# Vim
 *.swp
 *.swo
-*~
 
-# ==========================
-# Cache
-# ==========================
-.cache/
-__pycache__/
-*.pyc
+# Editor
+.vscode/
+.idea/
 
-# ==========================
-# Node
-# ==========================
-node_modules/
-
-# ==========================
 # Logs
-# ==========================
 *.log
 
-# ==========================
+# Cache
+.cache/
+tmp/
+
+# Neovim
+**/lazy-lock.json
+
+# Shell history
+.zsh_history
+.bash_history
+
 # Secrets
-# ==========================
 .env
 .env.*
 *.pem
 *.key
-id_rsa
-id_ed25519
+*.crt
 
-# ==========================
+# GitHub CLI
+.config/gh/hosts.yml
+
 # SSH
-# ==========================
-known_hosts
-authorized_keys
+.ssh/
 
-# ==========================
-# Temporary
-# ==========================
-tmp/
+# Backup folders
+.dotfiles-backup/
+
+# Python
+__pycache__/
+*.pyc
