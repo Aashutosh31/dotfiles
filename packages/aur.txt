@@ -1,0 +1,10 @@
+brave-bin
+candy-icons-git
+easyeffects-git
+google-chrome
+mpvpaper
+python-pywal16
+qimgv
+sddm-sugar-candy-git
+sweet-cursors-hyprcursor-git
+xcursor-breeze5

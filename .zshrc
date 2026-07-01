@@ -63,7 +63,6 @@ alias lt="eza --tree --level=2 --icons"
 
 alias cat="bat"
 
-alias grep="rg"
 
 alias c="clear"
 alias cls="clear"
@@ -74,7 +73,7 @@ alias ...="cd ../.."
 alias ....="cd ../../.."
 alias ff='fd'
 alias fg='fd --glob'
-alias grep='rg'
+
 
 # ----------------------------
 # Environment

@@ -45,6 +45,17 @@ waybar/
 scripts/
 wallpapers/
 ```
+## Wallpapers
+
+This setup uses wallpapers from:
+
+https://github.com/michaelScopic/Wallpapers
+
+Clone them with:
+
+```bash
+git clone https://github.com/michaelScopic/Wallpapers ~/Pictures/wallpapers
+```
 
 ## Goals
 
