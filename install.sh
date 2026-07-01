@@ -10,6 +10,8 @@ sudo pacman -Syu --needed - < "$REPO/packages/pacman.txt"
 if command -v yay >/dev/null 2>&1; then
     echo "==> Installing AUR packages..."
     yay -S --needed --answerclean None --answerdiff None - < "$REPO/packages/aur.txt"
+else
+    echo "==> yay not found. Skipping AUR packages."
 fi
 
 backup="$HOME/.dotfiles-backup/$(date +%Y%m%d-%H%M%S)"
@@ -48,4 +50,8 @@ cp -f "$REPO/home/.zshrc" "$HOME/"
 cp -f "$REPO/home/.XCompose" "$HOME/"
 
 echo
-echo "Done."
+echo "======================================"
+echo " Dotfiles installed successfully!"
+echo " Backup saved to:"
+echo " $backup"
+echo "======================================"
