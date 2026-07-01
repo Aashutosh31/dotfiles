@@ -1,0 +1,7 @@
+[manager]
+border_symbol = "│"
+border_style = { fg = "#7aa2f7" }
+
+[status]
+separator_open = ""
+separator_close = ""
