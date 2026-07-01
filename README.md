@@ -56,7 +56,7 @@ My personal Arch Linux + Omarchy + Hyprland setup.
 Clone:
 
 ```bash
-git clone https://github.com/<your-username>/dotfiles.git
+git clone https://github.com/Aashutosh31/dotfiles.git
 cd dotfiles
 ```
 
@@ -67,23 +67,7 @@ chmod +x install.sh
 ./install.sh
 ```
 
----
 
-# 💾 Backup
-
-```bash
-./scripts/backup.sh
-```
-
----
-
-# ♻️ Restore
-
-```bash
-./scripts/restore.sh
-```
-
----
 
 # 📂 Repository Structure
 
