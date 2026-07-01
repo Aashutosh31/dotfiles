@@ -2,6 +2,10 @@
 
 My personal Arch Linux + Omarchy + Hyprland setup.
 
+# Screenshot
+
+![Desktop](screenshots/desktop.png)
+
 ## ✨ Features
 
 - 🖥️ Hyprland + Omarchy
