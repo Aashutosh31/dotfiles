@@ -1,50 +1,36 @@
-#!/usr/bin/env bash
+backup_dir="$HOME/.dotfiles-backup/$(date +%Y%m%d-%H%M%S)"
 
-set -euo pipefail
+echo "==> Creating backup..."
+mkdir -p "$backup_dir"
 
-REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+backup() {
+    if [ -e "$1" ]; then
+        mkdir -p "$backup_dir$(dirname "$1")"
+        cp -a "$1" "$backup_dir$1"
+    fi
+}
 
-echo "==> Installing official packages..."
-sudo pacman -Syu --needed - < "$REPO/packages/pacman.txt"
+restore_config() {
+    local name="$1"
 
-if command -v yay >/dev/null 2>&1; then
-    echo "==> Installing AUR packages..."
-    yay -S --needed --answerclean None --answerdiff None - < "$REPO/packages/aur.txt"
-else
-    echo "yay not found. Skipping AUR packages."
-fi
+    backup "$HOME/.config/$name"
 
-echo "==> Creating config directories..."
-mkdir -p ~/.config
+    rm -rf "$HOME/.config/$name"
+    mkdir -p "$HOME/.config"
 
-echo "==> Installing dotfiles..."
+    cp -a "$REPO/$name/.config/$name" "$HOME/.config/"
+}
 
-cp -r "$REPO/alacritty/.config/"* ~/.config/
-cp -r "$REPO/atuin/.config/"* ~/.config/
-cp -r "$REPO/btop/.config/"* ~/.config/
-cp -r "$REPO/fastfetch/.config/"* ~/.config/
-cp -r "$REPO/ghostty/.config/"* ~/.config/
-cp -r "$REPO/hypr/.config/"* ~/.config/
-cp -r "$REPO/kitty/.config/"* ~/.config/
-cp -r "$REPO/lazydocker/.config/"* ~/.config/
-cp -r "$REPO/lazygit/.config/"* ~/.config/
-cp -r "$REPO/mise/.config/"* ~/.config/
-cp -r "$REPO/mpv/.config/"* ~/.config/
-cp -r "$REPO/nvim/.config/"* ~/.config/
-cp -r "$REPO/starship/.config/"* ~/.config/
-cp -r "$REPO/swayosd/.config/"* ~/.config/
-cp -r "$REPO/tmux/.config/"* ~/.config/
-cp -r "$REPO/voxtype/.config/"* ~/.config/
-cp -r "$REPO/walker/.config/"* ~/.config/
-cp -r "$REPO/waybar/.config/"* ~/.config/
-cp -r "$REPO/wiremix/.config/"* ~/.config/
-cp -r "$REPO/yazi/.config/"* ~/.config/
-cp -r "$REPO/zellij/.config/"* ~/.config/
+for cfg in \
+alacritty atuin btop fastfetch ghostty hypr kitty lazydocker lazygit \
+mise mpv nvim starship swayosd tmux voxtype walker waybar wiremix \
+yazi zellij
+do
+    restore_config "$cfg"
+done
 
-cp "$REPO/home/.zshrc" ~/
-cp "$REPO/home/.XCompose" ~/
+backup "$HOME/.zshrc"
+backup "$HOME/.XCompose"
 
-echo
-echo "======================================"
-echo " Dotfiles installed successfully."
-echo "======================================"
+cp -f "$REPO/home/.zshrc" ~/
+cp -f "$REPO/home/.XCompose" ~/
