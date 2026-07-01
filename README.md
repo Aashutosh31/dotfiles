@@ -1,65 +1,129 @@
-# Aashutosh's Dotfiles
+# 🚀 Aashutosh's Dotfiles
 
-My personal Linux development environment.
+My personal Arch Linux + Omarchy + Hyprland setup.
 
-## Environment
+## ✨ Features
 
-- OS: Arch Linux (Omarchy)
-- WM: Hyprland
-- Terminal: Ghostty
-- Shell: Zsh
-- Prompt: Starship
+- 🖥️ Hyprland + Omarchy
+- 🎨 Tokyo Night theme
+- ⚡ Fastfetch
+- ⭐ Starship prompt
+- 📝 Neovim (LazyVim)
+- 📂 Yazi
+- 🐚 Zsh
+- 👻 Ghostty
+- 📊 Btop
+- 🎵 Wiremix
+- 🔊 SwayOSD
+- 🚀 Waybar
+- 🖼️ Wallpapers collection
 
-## Applications
+---
 
-- Ghostty
-- Starship
-- Yazi
-- Lazygit
+# 📦 Included Configurations
+
+- Alacritty
+- Atuin
 - Btop
 - Fastfetch
+- Ghostty
+- Hyprland
+- Kitty
+- Lazydocker
+- Lazygit
+- Mise
+- MPV
+- Neovim
+- Starship
+- SwayOSD
+- Tmux
+- Voxtype
+- Walker
+- Waybar
+- Wiremix
+- Yazi
 - Zellij
-- Zoxide
-- Atuin
-- Eza
-- Bat
-- Ripgrep
-- fd
-- Dust
-- Duf
+- Zsh
 
-## Repository Structure
+---
 
-```
-ghostty/
-starship/
-zsh/
-yazi/
-lazygit/
-btop/
-fastfetch/
-zellij/
-git/
-hypr/
-waybar/
-scripts/
-wallpapers/
-```
-## Wallpapers
+# 📥 Installation
 
-This setup uses wallpapers from:
-
-https://github.com/michaelScopic/Wallpapers
-
-Clone them with:
+Clone:
 
 ```bash
-git clone https://github.com/michaelScopic/Wallpapers ~/Pictures/wallpapers
+git clone https://github.com/<your-username>/dotfiles.git
+cd dotfiles
 ```
 
-## Goals
+Run:
 
-- Reproducible workstation
-- Version controlled configuration
-- One-command installation
-- Easy migration to new systems
+```bash
+chmod +x install.sh
+./install.sh
+```
+
+---
+
+# 💾 Backup
+
+```bash
+./scripts/backup.sh
+```
+
+---
+
+# ♻️ Restore
+
+```bash
+./scripts/restore.sh
+```
+
+---
+
+# 📂 Repository Structure
+
+```text
+.
+├── alacritty/
+├── atuin/
+├── btop/
+├── fastfetch/
+├── ghostty/
+├── home/
+├── hypr/
+├── kitty/
+├── lazydocker/
+├── lazygit/
+├── mise/
+├── mpv/
+├── nvim/
+├── omarchy/
+├── packages/
+├── scripts/
+├── starship/
+├── swayosd/
+├── tmux/
+├── voxtype/
+├── walker/
+├── wallpapers/
+├── waybar/
+├── wiremix/
+├── yazi/
+└── zellij/
+```
+
+---
+
+# 🛠 Requirements
+
+- Arch Linux
+- Omarchy
+- yay
+- Git
+
+---
+
+# 📜 License
+
+MIT License
