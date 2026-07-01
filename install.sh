@@ -1,24 +1,36 @@
-backup_dir="$HOME/.dotfiles-backup/$(date +%Y%m%d-%H%M%S)"
+#!/usr/bin/env bash
 
-echo "==> Creating backup..."
-mkdir -p "$backup_dir"
+set -euo pipefail
 
-backup() {
+REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+echo "==> Installing official packages..."
+sudo pacman -Syu --needed - < "$REPO/packages/pacman.txt"
+
+if command -v yay >/dev/null 2>&1; then
+    echo "==> Installing AUR packages..."
+    yay -S --needed --answerclean None --answerdiff None - < "$REPO/packages/aur.txt"
+fi
+
+backup="$HOME/.dotfiles-backup/$(date +%Y%m%d-%H%M%S)"
+mkdir -p "$backup"
+
+backup_item() {
     if [ -e "$1" ]; then
-        mkdir -p "$backup_dir$(dirname "$1")"
-        cp -a "$1" "$backup_dir$1"
+        mkdir -p "$backup$(dirname "$1")"
+        cp -a "$1" "$backup$1"
     fi
 }
 
-restore_config() {
-    local name="$1"
+install_cfg() {
+    local cfg="$1"
 
-    backup "$HOME/.config/$name"
-
-    rm -rf "$HOME/.config/$name"
-    mkdir -p "$HOME/.config"
-
-    cp -a "$REPO/$name/.config/$name" "$HOME/.config/"
+    if [ -d "$REPO/$cfg/.config/$cfg" ]; then
+        backup_item "$HOME/.config/$cfg"
+        rm -rf "$HOME/.config/$cfg"
+        mkdir -p "$HOME/.config"
+        cp -a "$REPO/$cfg/.config/$cfg" "$HOME/.config/"
+    fi
 }
 
 for cfg in \
@@ -26,11 +38,14 @@ alacritty atuin btop fastfetch ghostty hypr kitty lazydocker lazygit \
 mise mpv nvim starship swayosd tmux voxtype walker waybar wiremix \
 yazi zellij
 do
-    restore_config "$cfg"
+    install_cfg "$cfg"
 done
 
-backup "$HOME/.zshrc"
-backup "$HOME/.XCompose"
+backup_item "$HOME/.zshrc"
+backup_item "$HOME/.XCompose"
 
-cp -f "$REPO/home/.zshrc" ~/
-cp -f "$REPO/home/.XCompose" ~/
+cp -f "$REPO/home/.zshrc" "$HOME/"
+cp -f "$REPO/home/.XCompose" "$HOME/"
+
+echo
+echo "Done."
