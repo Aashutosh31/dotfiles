@@ -161,6 +161,7 @@ In short: `bootstrap.sh` gets a bare Arch install to the point where `install.sh
 ├── mise/
 ├── mpv/
 ├── nvim/
+├── vscode/
 ├── omarchy/
 ├── packages/       # pacman.txt, aur.txt
 ├── scripts/
