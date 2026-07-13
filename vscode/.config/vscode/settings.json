@@ -1,0 +1,88 @@
+{
+    "workbench.colorTheme": "Tokyo Night",
+    "workbench.iconTheme": "material-icon-theme",
+
+    "editor.fontFamily": "JetBrainsMono Nerd Font",
+    "editor.fontLigatures": true,
+    "editor.fontSize": 15,
+    "editor.lineHeight": 26,
+
+    "editor.wordWrap": "on",
+    "editor.minimap.enabled": true,
+    "editor.smoothScrolling": true,
+
+    "editor.cursorBlinking": "smooth",
+    "editor.cursorSmoothCaretAnimation": "on",
+    "editor.cursorStyle": "line",
+    "editor.cursorWidth": 2,
+
+    "editor.bracketPairColorization.enabled": true,
+    "editor.guides.bracketPairs": true,
+    "editor.guides.indentation": true,
+
+    "editor.stickyScroll.enabled": true,
+
+    "editor.renderWhitespace": "selection",
+
+    "editor.formatOnSave": true,
+
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true,
+
+    "terminal.integrated.fontFamily": "JetBrainsMono Nerd Font",
+    "terminal.integrated.fontSize": 14,
+
+    "files.autoSave": "afterDelay",
+
+    "explorer.confirmDelete": false,
+    "explorer.confirmDragAndDrop": false,
+
+    "git.autofetch": true,
+    "git.ignoreRebaseWarning": true,
+    "git.confirmSync": false,
+
+    "js/ts.updateImportsOnFileMove.enabled": "always",
+
+    "typescript.suggest.autoImports": true,
+    "javascript.suggest.autoImports": true,
+
+    "diffEditor.maxComputationTime": 0,
+
+    "github.copilot.nextEditSuggestions.enabled": true,
+    "github.copilot.enable": {
+        "*": true,
+        "plaintext": false,
+        "markdown": true,
+        "scminput": false,
+        "cpp": false,
+        "html": false
+    },
+
+    "chat.viewSessions.orientation": "stacked",
+
+    "hediet.vscode-drawio.resizeImages": null,
+
+    "yaml.disableSchemaDetection": [
+        "**/.github/workflows/*.yml",
+        "**/.github/workflows/*.yaml",
+        "**/.gitea/workflows/*.yml",
+        "**/.gitea/workflows/*.yaml",
+        "**/.forgejo/workflows/*.yml",
+        "**/.forgejo/workflows/*.yaml"
+    ],
+"[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+},
+"[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+},
+"[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+},
+"[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+},
+"[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+}
+}
