@@ -61,7 +61,7 @@
 | 🎨 **Theme** | Tokyo Night, applied system-wide |
 | ⚡ **System Info** | Fastfetch |
 | ⭐ **Prompt** | Starship |
-| 📝 **Editor** | Neovim (LazyVim) |
+| 📝 **Editors** | Neovim (LazyVim) & VS Code |
 | 📂 **File Manager** | Yazi |
 | 🐚 **Shell** | Zsh |
 | 👻 **Terminal** | Ghostty |
@@ -77,7 +77,7 @@
 
 ```
 alacritty · atuin · btop · fastfetch · ghostty · hyprland · kitty
-lazydocker · lazygit · mise · mpv · neovim · starship · swayosd
+lazydocker · lazygit · mise · mpv · neovim · VS Code · starship · swayosd
 tmux · voxtype · walker · waybar · wiremix · yazi · zellij · zsh
 ```
 
