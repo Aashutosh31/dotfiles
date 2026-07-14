@@ -106,7 +106,7 @@ window#waybar {
 #clock {
   color: #ffe8f6;
   font-weight: 700;
-  letter-spacing: 1px;
+  letter-spacing: 2px;
   padding-left: 16px;
   padding-right: 16px;
   text-shadow: 0 0 10px rgba(244, 178, 216, 0.25);

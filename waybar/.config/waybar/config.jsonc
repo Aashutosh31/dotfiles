@@ -50,9 +50,10 @@
     "on-click-right": "alacritty"
   },
   "clock": {
-    "format": "{:L%A %H:%M}",
-    "format-alt": "{:L%d %B W%V %Y}",
-    "tooltip": false,
+    "format": "󰥔 {:%I:%M %p}",
+    "format-alt": "󰃭 {:%A, %d %B %Y}",
+    "tooltip-format": "{:%A, %d %B %Y}",
+    "tooltip": true,
     "on-click-right": "omarchy-launch-floating-terminal-with-presentation omarchy-tz-select"
   },
   "custom/weather": {
