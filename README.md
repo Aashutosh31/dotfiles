@@ -16,6 +16,17 @@
 [![Shell](https://img.shields.io/badge/Shell-Zsh-89E051?style=for-the-badge&logo=gnu-bash&logoColor=white)](https://www.zsh.org)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
 
+<br>
+
+### ▶️ Live Demo
+
+
+
+https://github.com/user-attachments/assets/41fc1ed6-b06a-4639-9338-68ffa2ab9d08
+
+
+
+
 </div>
 
 ---
@@ -31,6 +42,7 @@
 - [Repository Structure](#-repository-structure)
 - [Requirements](#-requirements)
 - [Backups & Rollback](#-backups--rollback)
+- [Wallpaper Credits](#️-wallpaper-credits)
 - [License](#-license)
 
 ---
@@ -50,6 +62,8 @@
 | *LazyVim, Tokyo Night* | *File manager in action* |
 
 </div>
+
+> 💡 Add your actual screenshots to a `screenshots/` folder using these filenames (or update the paths above) — `desktop.png`, `terminal.png`, `neovim.png`, `yazi.png`. Even one or two extra shots massively improves first impressions on GitHub.
 
 ---
 
@@ -204,17 +218,15 @@ cp -a ~/.dotfiles-backup/<timestamp>/.config/<tool> ~/.config/
 
 ---
 
-___
-
 ## 🖼️ Wallpaper Credits
- 
+
 The wallpapers in this repo are sourced from [michaelScopic/Wallpapers](https://github.com/michaelScopic/Wallpapers) — a large, curated wallpaper collection pulled largely from the r/unixporn community.
- 
+
 > ⚠️ That repo is archived on GitHub and development has moved to Codeberg: [codeberg.org/michaelScopic/Wallpapers](https://codeberg.org/michaelScopic/Wallpapers)
- 
+
 All credit for the wallpaper collection goes to the original author and contributors — only a subset is mirrored here for use with this setup.
- 
-___
+
+---
 
 ## 📜 License
 
