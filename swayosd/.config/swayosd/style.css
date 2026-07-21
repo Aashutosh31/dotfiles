@@ -1,28 +1,56 @@
-@import "../omarchy/current/theme/swayosd.css";
+/* ============================================================
+   SwayOSD — "Aurora Peaks" theme
+   Matches the purple / magenta / blue night-mountain wallpaper
+   ============================================================ */
+
+@define-color osd-bg      rgba(18, 10, 34, 0.90);
+@define-color osd-border  #c96cff;
+@define-color osd-label   #f6eefc;
+@define-color osd-icon    #ff8fd6;
+@define-color osd-track   rgba(255, 255, 255, 0.07);
 
 window {
-  border-radius: 0;
-  opacity: 0.97;
-  border: 2px solid @border-color;
-
-  background-color: @background-color;
+    border-radius: 20px;
+    opacity: 0.98;
+    border: 1.5px solid @osd-border;
+    background-color: @osd-bg;
+    box-shadow:
+        0 0 30px 2px rgba(255, 110, 199, 0.25),
+        0 0 55px 10px rgba(79, 195, 255, 0.12),
+        0 10px 30px rgba(0, 0, 0, 0.5);
+    padding: 16px 20px;
 }
 
 label {
-  font-family: 'JetBrainsMono Nerd Font';
-  font-size: 11pt;
-
-  color: @label;
+    font-family: 'JetBrainsMono Nerd Font';
+    font-size: 11pt;
+    font-weight: 500;
+    color: @osd-label;
 }
 
 image {
-  color: @image;
+    color: @osd-icon;
 }
 
 progressbar {
-  border-radius: 0;
+    border-radius: 12px;
+    min-height: 10px;
+    background-color: @osd-track;
+}
+
+trough {
+    border-radius: 12px;
+    min-height: 10px;
+    background-color: @osd-track;
 }
 
 progress {
-  background-color: @progress;
+    border-radius: 12px;
+    min-height: 10px;
+    background-image: linear-gradient(
+        90deg,
+        #ff6ec7 0%,
+        #b768ff 50%,
+        #4fc3ff 100%
+    );
 }

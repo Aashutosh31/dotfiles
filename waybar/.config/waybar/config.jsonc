@@ -21,12 +21,26 @@
     "on-click": "activate",
     "format": "{icon}",
     "format-icons": {
-      "default": "",
-      "active": "",
-      "urgent": ""
+      "default": "",
+      "1": "1",
+      "2": "2",
+      "3": "3",
+      "4": "4",
+      "5": "5",
+      "6": "6",
+      "7": "7",
+      "8": "8",
+      "9": "9",
+      "10": "0",
+      "active": "󱓻"
     },
     "persistent-workspaces": {
-      "*": 5
+      "1": [],
+      "2": [],
+      "3": [],
+      "4": [],
+      "5": [],
+      "6": []
     }
   },
   "custom/omarchy": {
@@ -49,13 +63,13 @@
     "on-click": "omarchy-launch-or-focus-tui btop",
     "on-click-right": "alacritty"
   },
-  "clock": {
+"clock": {
     "format": "󰥔 {:%I:%M %p}",
     "format-alt": "󰃭 {:%A, %d %B %Y}",
     "tooltip-format": "{:%A, %d %B %Y}",
     "tooltip": true,
     "on-click-right": "omarchy-launch-floating-terminal-with-presentation omarchy-tz-select"
-  },
+},
   "custom/weather": {
     "exec": "$OMARCHY_PATH/default/waybar/weather.sh",
     "return-type": "json",
