@@ -47,15 +47,54 @@
 
 <div align="center">
 
-|                Desktop                 |               Terminal                |
-| :------------------------------------: | :-----------------------------------: |
-|  ![Desktop](screenshots/desktop.png)   | ![Terminal](screenshots/terminal.png) |
-| _Hyprland + Omarchy shell + wallhaven_ |   _Ghostty + Fastfetch + Starship_    |
+<a href="screenshots/">
+  <img src="screenshots/desktop.png" alt="Desktop" width="100%" />
+</a>
+<p><em>Hero shot: Hyprland + Omarchy shell + wallhaven</em></p>
 
-|              Neovim               |             Yazi              |              VS Code               |
-| :-------------------------------: | :---------------------------: | :--------------------------------: |
-| ![Neovim](screenshots/neovim.png) | ![Yazi](screenshots/yazi.png) | ![VS Code](screenshots/vscode.png) |
-|       _LazyVim, wallhaven_        |   _File manager in action_    |      _Code editor in action_       |
+<table>
+  <tr>
+    <td width="50%">
+      <a href="screenshots/">
+        <img src="screenshots/terminal.png" alt="Terminal" width="100%" />
+      </a>
+    </td>
+    <td width="50%">
+      <a href="screenshots/">
+        <img src="screenshots/vscode.png" alt="VS Code" width="100%" />
+      </a>
+    </td>
+  </tr>
+  <tr>
+    <td><em>Ghostty + Fastfetch + Starship</em></td>
+    <td><em>Editor workflow in VS Code</em></td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td width="33%">
+      <a href="screenshots/">
+        <img src="screenshots/neovim.png" alt="Neovim" width="100%" />
+      </a>
+    </td>
+    <td width="33%">
+      <a href="screenshots/">
+        <img src="screenshots/yazi.png" alt="Yazi" width="100%" />
+      </a>
+    </td>
+    <td width="33%">
+      <a href="screenshots/">
+        <img src="screenshots/screensaver.png" alt="Screensaver" width="100%" />
+      </a>
+    </td>
+  </tr>
+  <tr>
+    <td><em>LazyVim</em></td>
+    <td><em>Yazi file manager</em></td>
+    <td><em>Idle screensaver</em></td>
+  </tr>
+</table>
 
 </div>
 
