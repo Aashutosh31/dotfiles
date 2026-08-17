@@ -4,15 +4,41 @@ set -euo pipefail
 
 REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-echo "==> Installing official packages..."
-sudo pacman -Syu --needed - < "$REPO/packages/pacman.txt"
-
-if command -v yay >/dev/null 2>&1; then
-    echo "==> Installing AUR packages..."
-    yay -S --needed --answerclean None --answerdiff None - < "$REPO/packages/aur.txt"
-else
-    echo "==> yay not found. Skipping AUR packages."
+# =============================================
+# Stage 1/3: Official packages (pacman)
+# =============================================
+echo
+echo "==> Stage 1/3: Installing official packages (pacman)..."
+if ! sudo pacman -Syu --needed - < "$REPO/packages/pacman.txt"; then
+    echo
+    echo "ERROR: Official package installation (pacman) failed."
+    echo "       Check the output above for details."
+    exit 1
 fi
+
+# =============================================
+# Stage 2/3: AUR packages (yay)
+# =============================================
+echo
+echo "==> Stage 2/3: Installing AUR packages (yay)..."
+if command -v yay &>/dev/null; then
+    if ! yay -S --needed --answerclean None --answerdiff None - < "$REPO/packages/aur.txt"; then
+        echo
+        echo "ERROR: AUR package installation (yay) failed."
+        echo "       Check the output above for details."
+        exit 1
+    fi
+else
+    echo "WARNING: yay not found. Skipping AUR packages."
+    echo "         Install yay first, then re-run this script."
+    exit 1
+fi
+
+# =============================================
+# Stage 3/3: Configuration files
+# =============================================
+echo
+echo "==> Stage 3/3: Installing configuration files..."
 
 backup="$HOME/.dotfiles-backup/$(date +%Y%m%d-%H%M%S)"
 mkdir -p "$backup"

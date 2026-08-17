@@ -209,8 +209,9 @@ In short: `bootstrap.sh` gets a bare Arch install to the point where `install.sh
 ├── nvim/
 ├── vscode/
 ├── omarchy/       # shell, bar plugin, theme, hooks, theme.name
+├── bootstrap.sh   # one-shot installer for fresh machines
 ├── packages/       # pacman.txt, aur.txt
-├── scripts/       # bootstrap.sh, omarchy-launch-about
+├── scripts/       # omarchy-launch-about
 ├── starship/
 ├── tmux/
 ├── voxtype/

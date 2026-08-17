@@ -13,12 +13,10 @@ bash-completion
 bat
 bluez-utils
 bolt
-brave-bin
 brightnessctl
 btop
 btrfs-progs
 calf
-candy-icons-git
 chromium
 clang
 cliamp
@@ -36,7 +34,6 @@ dosfstools
 dotnet-runtime-9.0
 dua-cli
 duf
-easyeffects-git
 edk2-ovmf
 efibootmgr
 evince
@@ -63,7 +60,6 @@ gnome-calculator
 gnome-disk-utility
 gnome-keyring
 gnome-themes-extra
-google-chrome
 gpu-screen-recorder
 grim
 gst-plugin-pipewire
@@ -109,7 +105,6 @@ man-db
 mariadb-libs
 mise
 mpv
-mpvpaper
 nautilus
 nautilus-python
 neovim
@@ -137,16 +132,13 @@ postgresql-libs
 power-profiles-daemon
 python-gobject
 python-poetry-core
-python-pywal16
 python-terminaltexteffects
 qemu-full
-qimgv
 qt5-wayland
 ripgrep
 ruby
 rust
 sddm
-sddm-sugar-candy-git
 signal-desktop
 slurp
 snapper
@@ -157,7 +149,6 @@ starship
 sudo
 sushi
 swaync
-sweet-cursors-hyprcursor-git
 swtpm
 system-config-printer
 tesseract
@@ -193,7 +184,6 @@ wireplumber
 wl-clipboard
 woff2-font-awesome
 wtype
-xcursor-breeze5
 xdg-desktop-portal-gtk
 xdg-desktop-portal-hyprland
 xdg-terminal-exec
