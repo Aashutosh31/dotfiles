@@ -59,10 +59,6 @@
 
 </div>
 
-> 💡 Add your actual screenshots to a `screenshots/` folder using these filenames (or update the paths above) — `desktop.png`, `terminal.png`, `neovim.png`, `yazi.png`, `vscode.png`. Even one or two extra shots massively improves first impressions on GitHub.
-
----
-
 ## ✨ Features
 
 |                             |                                              |
