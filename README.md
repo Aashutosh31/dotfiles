@@ -1,11 +1,12 @@
 <div align="center">
 
 ```
-    ___              __          __             __
-   /   | ____ ______/ /_  __  __/ /_____  _____/ /_
-  / /| |/ __ `/ ___/ __ \/ / / / __/ __ \/ ___/ __ \
- / ___ / /_/ (__  ) / / / /_/ / /_/ /_/ (__  ) / / /
-/_/  |_\__,_/____/_/ /_/\__,_/\__/\____/____/_/ /_/
+ █████╗  █████╗ ███████╗██╗  ██╗██╗   ██╗████████╗ ██████╗ ███████╗██╗  ██╗
+██╔══██╗██╔══██╗██╔════╝██║  ██║██║   ██║╚══██╔══╝██╔═══██╗██╔════╝██║  ██║
+███████║███████║███████╗███████║██║   ██║   ██║   ██║   ██║███████╗███████║
+██╔══██║██╔══██║╚════██║██╔══██║██║   ██║   ██║   ██║   ██║╚════██║██╔══██║
+██║  ██║██║  ██║███████║██║  ██║╚██████╔╝   ██║   ╚██████╔╝███████║██║  ██║
+╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝ ╚═════╝    ╚═╝    ╚═════╝ ╚══════╝╚═╝  ╚═╝
 ```
 
 **Arch Linux · Omarchy · Hyprland — my daily driver, versioned.**
@@ -20,7 +21,7 @@
 
 ### ▶️ Live Demo
 
-[Demo Video](screenshots/demo.mp4) — click to watch a 1-minute demo of this setup in action.
+[Demo Video](https://youtu.be/pNU84d3qIt0)
 
 </div>
 
@@ -207,18 +208,6 @@ To roll back a specific config manually:
 ```bash
 cp -a ~/.dotfiles-backup/<timestamp>/.config/<tool> ~/.config/
 ```
-
----
-
-## 🖼️ Wallpaper Credits
-
-The wallpapers in this repo are sourced from [michaelScopic/Wallpapers](https://github.com/michaelScopic/Wallpapers) — a large, curated wallpaper collection pulled largely from the r/unixporn community.
-
-> ⚠️ That repo is archived on GitHub and development has moved to Codeberg: [codeberg.org/michaelScopic/Wallpapers](https://codeberg.org/michaelScopic/Wallpapers)
-
-All credit for the wallpaper collection goes to the original author and contributors — only a subset is mirrored here for use with this setup.
-
----
 
 ## 📜 License
 
