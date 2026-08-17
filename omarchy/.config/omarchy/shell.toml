@@ -1,0 +1,54 @@
+# ~/.config/omarchy/shell.toml
+# Machine-level override — merged over your active Omarchy theme.
+# Watched live: edits re-flow the shell instantly, no restart needed.
+# Palette pulled from your actual "wallhaven" theme (colors.toml, gen. by
+# Aether): accent #9070af (muted violet), foreground/selection #FDC1D5
+# (soft pink), with bright_blue #a980ce / bright_magenta #f0a0fa for a
+# punchier focus state.
+
+[font]
+base-size = 14
+
+[spacing]
+scale           = 1.1     # denser or roomier controls, panels, popups
+scale-with-font = true    # base-size keeps pulling spacing along with it
+
+[controls]
+# Idle chrome — quiet, no border until something happens
+normal-color        = "accent"
+normal-fill-alpha   = 0.08
+normal-border       = "accent"
+normal-border-width = 0
+normal-border-alpha = 0.0
+
+# Hover / keyboard cursor — accent (violet) into foreground/selection (pink)
+hover-cursor-color        = "accent"
+hover-cursor-fill-alpha   = 0.14
+hover-cursor-border       = "rgba(9070afee) rgba(fdc1d5ee) 135deg"
+hover-cursor-border-width = 1
+hover-cursor-border-alpha = 0.85
+
+# Qt activeFocus — bright_blue to bright_magenta, a more saturated pop
+# so focus reads distinctly from plain hover
+focus-color        = "accent"
+focus-fill-alpha   = 0.14
+focus-border       = "rgba(a980ceee) rgba(f0a0faee) 45deg"
+focus-border-width = 1
+focus-border-alpha = 0.9
+
+# Persistent selected/current — same violet-to-pink pairing, full opacity
+selected-color        = "foreground"
+selected-fill-alpha   = 0.10
+selected-border       = "rgba(9070afff) rgba(fdc1d5ff) 135deg"
+selected-border-width = 1
+selected-border-alpha = 0.9
+
+# Momentary feedback
+pressed-fill-alpha   = 0.20
+selection-color      = "accent"
+selection-fill-alpha = 0.25
+
+[bar]
+size-horizontal = 30      # top/bottom bar height
+size-vertical   = 30      # left/right bar width, if you ever flip orientation
+scale-with-font = true

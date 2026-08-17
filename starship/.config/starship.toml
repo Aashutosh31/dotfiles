@@ -1,0 +1,72 @@
+# ==========================================================
+#        Aashutosh Developer Cockpit
+# ==========================================================
+
+add_newline = true
+
+palette = "tokyonight"
+
+format = """
+$directory\
+$git_branch\
+$git_status\
+$nodejs\
+$python\
+$rust\
+$docker_context\
+$cmd_duration\
+$character
+"""
+
+[palettes.tokyonight]
+fg      = "#c0caf5"
+blue    = "#7aa2f7"
+cyan    = "#7dcfff"
+green   = "#9ece6a"
+orange  = "#ff9e64"
+purple  = "#bb9af7"
+red     = "#f7768e"
+yellow  = "#e0af68"
+grey    = "#565f89"
+
+[fill]
+symbol = "─"
+
+[directory]
+style = "blue bold"
+format = "[󰉋 $path]($style)"
+truncation_length = 3
+truncate_to_repo = false
+home_symbol = "~"
+
+[git_branch]
+symbol = "󰘬 "
+style = "purple bold"
+format = "[└─ $symbol$branch]($style)"
+
+[git_status]
+style = "yellow bold"
+
+[nodejs]
+symbol = " "
+style = "green bold"
+format = "\n[$symbol($version )]($style)"
+
+[python]
+symbol = "🐍 "
+style = "yellow bold"
+format = "\n[$symbol${pyenv_prefix}(${version})]($style)"
+
+[rust]
+symbol = "🦀 "
+style = "orange bold"
+format = "\n[$symbol($version)]($style)"
+
+[docker_context]
+symbol = "🐳 "
+style = "cyan bold"
+format = "\n[$symbol$context]($style)"
+
+[character]
+success_symbol = "[❯](green bold)"
+error_symbol = "[❯](red bold)"

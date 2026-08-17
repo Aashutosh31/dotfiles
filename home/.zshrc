@@ -80,3 +80,4 @@ alias fg='fd --glob'
 # ----------------------------
 export EDITOR="code"
 export VISUAL="code"
+. "$HOME/.local/share/../bin/env"

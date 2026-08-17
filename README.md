@@ -20,12 +20,7 @@
 
 ### ▶️ Live Demo
 
-
-
-https://github.com/user-attachments/assets/41fc1ed6-b06a-4639-9338-68ffa2ab9d08
-
-
-
+[Demo Video](screenshots/demo.mp4) — click to watch a 1-minute demo of this setup in action.
 
 </div>
 
@@ -51,48 +46,46 @@ https://github.com/user-attachments/assets/41fc1ed6-b06a-4639-9338-68ffa2ab9d08
 
 <div align="center">
 
-| Desktop | Terminal |
-|:---:|:---:|
-| ![Desktop](screenshots/desktop.png) | ![Terminal](screenshots/terminal.png) |
-| *Hyprland + Waybar + Tokyo Night* | *Ghostty + Fastfetch + Starship* |
+|                Desktop                 |               Terminal                |
+| :------------------------------------: | :-----------------------------------: |
+|  ![Desktop](screenshots/desktop.png)   | ![Terminal](screenshots/terminal.png) |
+| _Hyprland + Omarchy shell + wallhaven_ |   _Ghostty + Fastfetch + Starship_    |
 
-| Neovim | Yazi |
-|:---:|:---:|
-| ![Neovim](screenshots/neovim.png) | ![Yazi](screenshots/yazi.png) |
-| *LazyVim, Tokyo Night* | *File manager in action* |
+|              Neovim               |             Yazi              |              VS Code               |
+| :-------------------------------: | :---------------------------: | :--------------------------------: |
+| ![Neovim](screenshots/neovim.png) | ![Yazi](screenshots/yazi.png) | ![VS Code](screenshots/vscode.png) |
+|       _LazyVim, wallhaven_        |   _File manager in action_    |      _Code editor in action_       |
 
 </div>
 
-> 💡 Add your actual screenshots to a `screenshots/` folder using these filenames (or update the paths above) — `desktop.png`, `terminal.png`, `neovim.png`, `yazi.png`. Even one or two extra shots massively improves first impressions on GitHub.
+> 💡 Add your actual screenshots to a `screenshots/` folder using these filenames (or update the paths above) — `desktop.png`, `terminal.png`, `neovim.png`, `yazi.png`, `vscode.png`. Even one or two extra shots massively improves first impressions on GitHub.
 
 ---
 
 ## ✨ Features
 
-| | |
-|---|---|
-| 🖥️ **WM** | Hyprland on Omarchy |
-| 🎨 **Theme** | Tokyo Night, applied system-wide |
-| ⚡ **System Info** | Fastfetch |
-| ⭐ **Prompt** | Starship |
-| 📝 **Editors** | Neovim (LazyVim) & VS Code |
-| 📂 **File Manager** | Yazi |
-| 🐚 **Shell** | Zsh |
-| 👻 **Terminal** | Ghostty |
-| 📊 **Monitor** | Btop |
-| 🎵 **Audio** | Wiremix |
-| 🔊 **OSD** | SwayOSD |
-| 🚀 **Bar** | Waybar |
-| 🖼️ **Wallpapers** | Curated collection included |
+|                             |                                              |
+| --------------------------- | -------------------------------------------- |
+| 🖥️ **WM**                   | Hyprland on Omarchy (Quickshell-based shell) |
+| 🎨 **Theme**                | wallhaven, applied system-wide via Aether    |
+| ⚡ **System Info**          | Fastfetch                                    |
+| ⭐ **Prompt**               | Starship                                     |
+| 📝 **Editors**              | Neovim (LazyVim) & VS Code                   |
+| 📂 **File Manager**         | Yazi                                         |
+| 🐚 **Shell**                | Zsh (fish in foot)                           |
+| 👻 **Terminal**             | Ghostty / Alacritty / Kitty / Foot           |
+| 📊 **Monitor**              | Btop                                         |
+| 🚀 **Bar / Launcher / OSD** | Omarchy shell (Quickshell)                   |
+| 🖼️ **Wallpapers**           | Curated collection included                  |
 
 ---
 
 ## 📦 Included Configurations
 
 ```
-alacritty · atuin · btop · fastfetch · ghostty · hyprland · kitty
-lazydocker · lazygit · mise · mpv · neovim · VS Code · starship · swayosd
-tmux · voxtype · walker · waybar · wiremix · yazi · zellij · zsh
+alacritty · atuin · btop · fastfetch · fish · foot · ghostty · hyprland
+kitty · lazydocker · lazygit · mise · mpv · neovim · omarchy · starship
+tmux · voxtype · VS Code · yazi · zellij · zsh
 ```
 
 ---
@@ -127,10 +120,11 @@ chmod +x install.sh
 2. **Syncs official packages** — runs `pacman -Syu --needed` against [`packages/pacman.txt`](packages/pacman.txt).
 3. **Installs AUR packages** — if `yay` is present, installs everything in [`packages/aur.txt`](packages/aur.txt) non-interactively (`--answerclean None --answerdiff None`). Skips gracefully if `yay` isn't found.
 4. **Creates a timestamped backup** at `~/.dotfiles-backup/<YYYY><MM><DD>-<HHMMSS>/` — see [Backups & Rollback](#-backups--rollback) below.
-5. **Backs up and replaces each config** — for every tool in the list (`alacritty`, `atuin`, `btop`, `fastfetch`, `ghostty`, `hypr`, `kitty`, `lazydocker`, `lazygit`, `mise`, `mpv`, `nvim`, `starship`, `swayosd`, `tmux`, `voxtype`, `walker`, `waybar`, `wiremix`, `yazi`, `zellij`):
+5. **Backs up and replaces each config** — for every tool in the list (`alacritty`, `atuin`, `btop`, `fastfetch`, `fish`, `foot`, `ghostty`, `hypr`, `kitty`, `lazydocker`, `lazygit`, `mise`, `mpv`, `nvim`, `omarchy`, `tmux`, `voxtype`, `yazi`, `zellij`):
    - if a matching config exists in this repo, your current `~/.config/<tool>` is backed up first, then replaced.
-6. **Backs up and replaces dotfiles** — `~/.zshrc` and `~/.XCompose` get the same backup-then-overwrite treatment.
-7. **Prints the backup location** so you always know exactly where your previous setup went.
+6. **Installs starship** at `~/.config/starship.toml`, the **wallhaven theme background** into `~/.config/omarchy/themes/wallhaven/`, and the custom **About screen launcher** to `~/.local/bin/omarchy-launch-about`.
+7. **Backs up and replaces dotfiles** — `~/.zshrc` and `~/.XCompose` get the same backup-then-overwrite treatment.
+8. **Prints the backup location** so you always know exactly where your previous setup went.
 
 **Nothing is deleted without a backup first.** Every overwrite is preceded by a copy (`cp -a`) into the timestamped backup folder.
 
@@ -166,9 +160,11 @@ In short: `bootstrap.sh` gets a bare Arch install to the point where `install.sh
 ├── atuin/
 ├── btop/
 ├── fastfetch/
+├── fish/
+├── foot/
 ├── ghostty/
 ├── home/          # ~/.zshrc, ~/.XCompose
-├── hypr/
+├── hypr/          # Hyprland Lua config (Quattro)
 ├── kitty/
 ├── lazydocker/
 ├── lazygit/
@@ -176,17 +172,13 @@ In short: `bootstrap.sh` gets a bare Arch install to the point where `install.sh
 ├── mpv/
 ├── nvim/
 ├── vscode/
-├── omarchy/
+├── omarchy/       # shell, bar plugin, theme, hooks, theme.name
 ├── packages/       # pacman.txt, aur.txt
-├── scripts/
+├── scripts/       # bootstrap.sh, omarchy-launch-about
 ├── starship/
-├── swayosd/
 ├── tmux/
 ├── voxtype/
-├── walker/
 ├── wallpapers/
-├── waybar/
-├── wiremix/
 ├── yazi/
 └── zellij/
 ```

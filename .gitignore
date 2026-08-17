@@ -19,6 +19,12 @@ tmp/
 
 # Neovim
 **/lazy-lock.json
+**/.neoconf.json
+
+# Backup files
+*.bak
+*.omarchy-upgrade-to-quattro.*.bak
+config.backup.*
 
 # Shell history
 .zsh_history

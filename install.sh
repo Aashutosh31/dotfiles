@@ -36,12 +36,25 @@ install_cfg() {
 }
 
 for cfg in \
-alacritty atuin btop fastfetch ghostty hypr kitty lazydocker lazygit \
-mise mpv nvim starship swayosd tmux voxtype walker waybar wiremix \
-yazi zellij
+alacritty atuin btop fastfetch fish foot ghostty hypr kitty lazydocker \
+lazygit mise mpv nvim omarchy tmux voxtype yazi zellij
 do
     install_cfg "$cfg"
 done
+
+# Starship lives at ~/.config/starship.toml (not ~/.config/starship/)
+backup_item "$HOME/.config/starship.toml"
+cp -f "$REPO/starship/.config/starship.toml" "$HOME/.config/starship.toml"
+
+# The wallhaven theme's background is tracked once under wallpapers/
+mkdir -p "$HOME/.config/omarchy/themes/wallhaven/backgrounds"
+cp -f "$REPO/wallpapers/wallhaven.png" "$HOME/.config/omarchy/themes/wallhaven/backgrounds/wallhaven.png"
+
+# Custom About screen launcher
+backup_item "$HOME/.local/bin/omarchy-launch-about"
+mkdir -p "$HOME/.local/bin"
+cp -f "$REPO/scripts/omarchy-launch-about" "$HOME/.local/bin/omarchy-launch-about"
+chmod +x "$HOME/.local/bin/omarchy-launch-about"
 
 backup_item "$HOME/.zshrc"
 backup_item "$HOME/.XCompose"
