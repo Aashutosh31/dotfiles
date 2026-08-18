@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "aashutosh31.cpu",
+  "name": "CPU Usage",
+  "version": "1.0.0",
+  "author": "aashutosh31",
+  "description": "Live CPU usage percentage",
+  "kinds": [
+    "bar-widget"
+  ],
+  "entryPoints": {
+    "barWidget": "Cpu.qml"
+  },
+  "barWidget": {
+    "displayName": "CPU Usage",
+    "description": "Live CPU usage percentage with click-to-open btop",
+    "category": "System",
+    "allowMultiple": false
+  }
+}
