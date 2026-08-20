@@ -145,6 +145,12 @@ chmod +x install.sh
 ./install.sh
 ```
 
+After installation, if Hyprland is running, reload the config to apply changes:
+
+```bash
+hyprctl reload
+```
+
 ---
 
 ## 🔍 What `install.sh` Actually Does
@@ -157,12 +163,12 @@ chmod +x install.sh
 3. **Installs AUR packages** — if `yay` is present, installs everything in [`packages/aur.txt`](packages/aur.txt) non-interactively (`--answerclean None --answerdiff None`). Skips gracefully if `yay` isn't found.
 4. **Creates a timestamped backup** at `~/.dotfiles-backup/<YYYY><MM><DD>-<HHMMSS>/` — see [Backups & Rollback](#-backups--rollback) below.
 5. **Backs up and replaces each config** — for every tool in the list (`alacritty`, `atuin`, `btop`, `fastfetch`, `fish`, `foot`, `ghostty`, `hypr`, `kitty`, `lazydocker`, `lazygit`, `mise`, `mpv`, `nvim`, `omarchy`, `tmux`, `voxtype`, `yazi`, `zellij`):
-   - if a matching config exists in this repo, your current `~/.config/<tool>` is backed up first, then replaced.
+   - if a matching config exists in this repo, each file in your current `~/.config/<tool>` is backed up individually, then replaced in-place (safe to run while a desktop session is live — the directory is never deleted).
 6. **Installs starship** at `~/.config/starship.toml`, the **wallhaven theme background** into `~/.config/omarchy/themes/wallhaven/`, and the custom **About screen launcher** to `~/.local/bin/omarchy-launch-about`.
 7. **Backs up and replaces dotfiles** — `~/.zshrc` and `~/.XCompose` get the same backup-then-overwrite treatment.
 8. **Prints the backup location** so you always know exactly where your previous setup went.
 
-**Nothing is deleted without a backup first.** Every overwrite is preceded by a copy (`cp -a`) into the timestamped backup folder.
+**Nothing is deleted without a backup first.** Every overwrite is preceded by a copy (`cp -a`) into the timestamped backup folder. Configs are installed via per-file in-place replacement so a running desktop session never sees a missing or partially-written config directory.
 
 </details>
 

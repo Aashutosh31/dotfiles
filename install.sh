@@ -50,15 +50,38 @@ backup_item() {
     fi
 }
 
+# Per-file in-place replacement.
+#
+# Instead of deleting-and-replacing an entire directory (which leaves a
+# window where the directory is missing), we iterate over every file in
+# the repo source and overwrite each one individually inside the live
+# config directory.  The directory itself is never touched — only its
+# contents are updated.  Files that exist only in the live config are
+# left in place (no deletion during a live session).
 install_cfg() {
     local cfg="$1"
+    local src="$REPO/$cfg/.config/$cfg"
+    local dest="$HOME/.config/$cfg"
 
-    if [ -d "$REPO/$cfg/.config/$cfg" ]; then
-        backup_item "$HOME/.config/$cfg"
-        rm -rf "$HOME/.config/$cfg"
-        mkdir -p "$HOME/.config"
-        cp -a "$REPO/$cfg/.config/$cfg" "$HOME/.config/"
+    if [ ! -d "$src" ]; then
+        return
     fi
+
+    mkdir -p "$dest"
+
+    while IFS= read -r -d '' file; do
+        local rel="${file#"$src"/}"
+        local target="$dest/$rel"
+
+        # Back up the live file before overwriting.
+        backup_item "$target"
+
+        # Ensure the target subdirectory exists.
+        mkdir -p "$(dirname "$target")"
+
+        # Overwrite the live file in-place.
+        cp -a "$file" "$target"
+    done < <(find "$src" -type f -print0)
 }
 
 for cfg in \
@@ -67,6 +90,24 @@ lazygit mise mpv nvim omarchy tmux voxtype yazi zellij
 do
     install_cfg "$cfg"
 done
+
+# Validate Hyprland config if the compositor is running.
+if command -v hyprctl &>/dev/null && pgrep -x Hyprland &>/dev/null; then
+    echo "==> Validating Hyprland configuration..."
+    errors="$(hyprctl configerrors 2>/dev/null)"
+    if [ -n "$errors" ]; then
+        echo "    WARNING: Hyprland reports config errors:"
+        echo "$errors" | sed 's/^/      /'
+        echo "    Check ~/.config/hypr/ manually."
+    else
+        echo "    Hyprland config looks valid (no parse errors)."
+    fi
+    echo
+    echo "    NOTE: Config changes will take effect after you run:"
+    echo "          hyprctl reload"
+    echo "    Or log out and back in."
+    echo
+fi
 
 # Starship lives at ~/.config/starship.toml (not ~/.config/starship/)
 backup_item "$HOME/.config/starship.toml"
@@ -94,3 +135,6 @@ echo " Dotfiles installed successfully!"
 echo " Backup saved to:"
 echo " $backup"
 echo "======================================"
+echo
+echo " If you are running Hyprland, run 'hyprctl reload' to apply"
+echo " any config changes without logging out."
