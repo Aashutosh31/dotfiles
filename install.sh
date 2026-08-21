@@ -5,7 +5,7 @@ set -euo pipefail
 REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # =============================================
-# Stage 1/3: Missing official packages (pacman)
+# Stage 1/4: Missing official packages (pacman)
 # =============================================
 #
 # This installer deliberately does NOT run a full system upgrade (-Syu).
@@ -21,7 +21,7 @@ if [ "${#official_pkgs[@]}" -eq 0 ]; then
 fi
 
 echo
-echo "==> Stage 1/3: Installing missing official packages (${#official_pkgs[@]} total)..."
+echo "==> Stage 1/4: Installing missing official packages (${#official_pkgs[@]} total)..."
 
 if command -v omarchy-pkg-add &>/dev/null; then
     # Preferred path on Omarchy: installs only packages that are absent,
@@ -51,10 +51,10 @@ fi
 echo "==> Official packages OK."
 
 # =============================================
-# Stage 2/3: AUR packages (yay)
+# Stage 2/4: AUR packages (yay)
 # =============================================
 echo
-echo "==> Stage 2/3: Installing AUR packages (yay)..."
+echo "==> Stage 2/4: Installing AUR packages (yay)..."
 if command -v yay &>/dev/null; then
     if ! yay -S --needed --answerclean None --answerdiff None - < "$REPO/packages/aur.txt"; then
         echo
@@ -69,10 +69,10 @@ else
 fi
 
 # =============================================
-# Stage 3/3: Configuration files
+# Stage 3/4: Configuration files
 # =============================================
 echo
-echo "==> Stage 3/3: Installing configuration files..."
+echo "==> Stage 3/4: Installing configuration files..."
 
 backup="$HOME/.dotfiles-backup/$(date +%Y%m%d-%H%M%S)"
 mkdir -p "$backup"
@@ -163,6 +163,45 @@ backup_item "$HOME/.XCompose"
 cp -f "$REPO/home/.zshrc" "$HOME/"
 cp -f "$REPO/home/.XCompose" "$HOME/"
 
+# =============================================
+# Stage 4/4: Shell environment (zsh + PATH bootstrap)
+# =============================================
+#
+# Copying .zshrc alone does not give you a working shell: zsh must be the
+# login shell, and ~/.local/bin/env (normally written by uv's standalone
+# installer) must exist because the last line of .zshrc sources it.
+source "$REPO/scripts/lib/shell-env.sh"
+
+echo
+echo "==> Stage 4/4: Setting up the shell environment..."
+env_failures=0
+
+if ! ensure_zsh_in_etc_shells; then
+    echo "    WARNING: could not add zsh to /etc/shells."
+    env_failures=$((env_failures + 1))
+fi
+
+if ! ensure_login_shell_is_zsh; then
+    echo "    WARNING: could not set zsh as the login shell."
+    echo "    Run it manually later with: chsh -s \"$(command -v zsh 2>/dev/null || echo /bin/zsh)\""
+    env_failures=$((env_failures + 1))
+fi
+
+if ! ensure_local_bin_env "$backup"; then
+    echo "    WARNING: could not create ~/.local/bin/env."
+    env_failures=$((env_failures + 1))
+fi
+
+missing_cmds=""
+for cmd in "${REQUIRED_PKGS[@]}"; do
+    command -v "$cmd" &>/dev/null || missing_cmds+="$cmd "
+done
+if [ -n "$missing_cmds" ]; then
+    echo "    WARNING: these commands are still not on PATH: $missing_cmds"
+    echo "             (package stage may have failed — check output above,"
+    echo "              or run ./doctor.sh / ./repair.sh afterwards)"
+fi
+
 echo
 echo "======================================"
 echo " Dotfiles installed successfully!"
@@ -172,3 +211,12 @@ echo "======================================"
 echo
 echo " If you are running Hyprland, run 'hyprctl reload' to apply"
 echo " any config changes without logging out."
+if [ "$env_failures" -gt 0 ]; then
+    echo
+    echo " NOTE: $env_failures shell-environment step(s) reported problems above —"
+    echo "       fix them or run ./repair.sh before opening a new terminal."
+else
+    echo
+    echo " Zsh environment is ready. Open a NEW terminal to use it"
+    echo " (the login-shell change only applies to new sessions)."
+fi

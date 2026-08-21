@@ -48,7 +48,7 @@ else
 fi
 
 # --- 5. Make scripts executable ---
-chmod +x "$DOTFILES_DIR/install.sh"
+chmod +x "$DOTFILES_DIR/install.sh" "$DOTFILES_DIR/doctor.sh" "$DOTFILES_DIR/repair.sh"
 chmod +x "$DOTFILES_DIR/scripts/"*.sh 2>/dev/null || true
 
 # --- 6. Hand off to install.sh ---
