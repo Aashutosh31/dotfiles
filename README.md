@@ -159,7 +159,7 @@ hyprctl reload
 <summary><strong>Click to expand the step-by-step breakdown</strong></summary>
 
 1. **Resolves the repo path** — works regardless of where you run it from (`$REPO` = script's own directory).
-2. **Syncs official packages** — runs `pacman -Syu --needed` against [`packages/pacman.txt`](packages/pacman.txt).
+2. **Installs missing official packages** — ensures everything in [`packages/pacman.txt`](packages/pacman.txt) is present, using Omarchy's `omarchy-pkg-add` helper when available (falling back to `pacman -S --needed`). This **does not perform a full system upgrade** — on Omarchy, system upgrades belong to `omarchy update`, which the installer never bypasses.
 3. **Installs AUR packages** — if `yay` is present, installs everything in [`packages/aur.txt`](packages/aur.txt) non-interactively (`--answerclean None --answerdiff None`). Skips gracefully if `yay` isn't found.
 4. **Creates a timestamped backup** at `~/.dotfiles-backup/<YYYY><MM><DD>-<HHMMSS>/` — see [Backups & Rollback](#-backups--rollback) below.
 5. **Backs up and replaces each config** — for every tool in the list (`alacritty`, `atuin`, `btop`, `fastfetch`, `fish`, `foot`, `ghostty`, `hypr`, `kitty`, `lazydocker`, `lazygit`, `mise`, `mpv`, `nvim`, `omarchy`, `tmux`, `voxtype`, `yazi`, `zellij`):

@@ -5,16 +5,50 @@ set -euo pipefail
 REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # =============================================
-# Stage 1/3: Official packages (pacman)
+# Stage 1/3: Missing official packages (pacman)
 # =============================================
-echo
-echo "==> Stage 1/3: Installing official packages (pacman)..."
-if ! sudo pacman -Syu --needed - < "$REPO/packages/pacman.txt"; then
+#
+# This installer deliberately does NOT run a full system upgrade (-Syu).
+# On Omarchy, direct system upgrades must go through 'omarchy update'
+# (enforced by the Omarchy ALPM guard hook), so we only ensure that the
+# packages listed in packages/pacman.txt are present.
+mapfile -t official_pkgs < <(grep -vE '^[[:space:]]*(#|$)' "$REPO/packages/pacman.txt")
+
+if [ "${#official_pkgs[@]}" -eq 0 ]; then
     echo
-    echo "ERROR: Official package installation (pacman) failed."
-    echo "       Check the output above for details."
+    echo "ERROR: packages/pacman.txt contains no package names."
     exit 1
 fi
+
+echo
+echo "==> Stage 1/3: Installing missing official packages (${#official_pkgs[@]} total)..."
+
+if command -v omarchy-pkg-add &>/dev/null; then
+    # Preferred path on Omarchy: installs only packages that are absent,
+    # then verifies every requested package is actually installed.
+    if ! omarchy-pkg-add "${official_pkgs[@]}"; then
+        echo
+        echo "ERROR: Official package installation (omarchy-pkg-add) failed."
+        echo "       Check the output above for details."
+        exit 1
+    fi
+elif command -v pacman &>/dev/null; then
+    # Fallback for non-Omarchy Arch: install requested packages without
+    # refreshing databases or upgrading anything already installed.
+    echo "==> omarchy-pkg-add not found, falling back to 'pacman -S --needed'..."
+    if ! sudo pacman -S --needed "${official_pkgs[@]}"; then
+        echo
+        echo "ERROR: Official package installation (pacman) failed."
+        echo "       Check the output above for details."
+        exit 1
+    fi
+else
+    echo
+    echo "ERROR: Neither omarchy-pkg-add nor pacman found."
+    exit 1
+fi
+
+echo "==> Official packages OK."
 
 # =============================================
 # Stage 2/3: AUR packages (yay)
