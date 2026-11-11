@@ -1,34 +1,55 @@
 {
-  "version": 1,
-  "idle": {
-    "screensaver": 150,
-    "lock": 300
-  },
   "bar": {
-    "position": "top",
-    "transparent": false,
+    "background": "opaque",
     "centerAnchor": "omarchy.clock",
+    "id": "aashutosh31.bar",
     "layout": {
-      "left": [
-        {
-          "id": "omarchy.menu"
-        },
-        {
-          "id": "omarchy.workspaces"
-        }
-      ],
       "center": [
         {
           "id": "omarchy.indicators"
         },
         {
-          "id": "omarchy.clock",
-          "format": "dddd HH:mm",
+          "birthYear": 2005,
+          "format": "ddd d MMM h:mm AP",
           "formatAlt": "d MMMM 'W'ww yyyy",
+          "id": "omarchy.clock",
+          "lifeExpectancy": 80,
           "verticalFormat": "HH\n—\nmm"
         },
         {
-          "id": "omarchy.keyboard-layout"
+          "id": "omarchy.elsewhen",
+          "cities": [
+            {
+              "name": "Ratlam",
+              "zone": "Asia/Kolkata",
+              "lat": 23.38206,
+              "lon": 75.02484,
+              "region": "Madhya Pradesh, IN"
+            },
+            {
+              "name": "New York",
+              "zone": "America/New_York"
+            },
+            {
+              "name": "Tokyo",
+              "zone": "Asia/Tokyo"
+            },
+            {
+              "name": "Los Angeles",
+              "zone": "America/Los_Angeles"
+            },
+            {
+              "name": "London",
+              "zone": "Europe/London"
+            }
+          ],
+          "here": {
+            "lat": 23.38206,
+            "lon": 75.02484,
+            "name": "Ratlam",
+            "region": "Madhya Pradesh, IN",
+            "zone": "Asia/Kolkata"
+          }
         },
         {
           "id": "omarchy.weather"
@@ -37,18 +58,31 @@
           "id": "omarchy.system-update"
         }
       ],
+      "centerBegin": [],
+      "centerEnd": [],
+      "left": [
+        {
+          "id": "omarchy.menu"
+        },
+        {
+          "id": "omarchy.workspaces"
+        }
+      ],
       "right": [
         {
+          "id": "omarchy.keyboard-layout"
+        },
+        {
           "id": "omarchy.tray"
+        },
+        {
+          "id": "omarchy.agents"
         },
         {
           "id": "aashutosh31.cpu"
         },
         {
           "id": "omarchy.tailscale"
-        },
-        {
-          "id": "omarchy.agents"
         },
         {
           "id": "omarchy.bluetooth"
@@ -65,9 +99,18 @@
         {
           "id": "omarchy.power"
         }
-      ]
+      ],
+      "tray": []
     },
-    "id": "aashutosh31.bar"
+    "position": "top"
   },
-  "plugins": []
+  "dock": {
+    "autohide": true
+  },
+  "idle": {
+    "lock": 300,
+    "screensaver": 150
+  },
+  "plugins": [],
+  "version": 1
 }

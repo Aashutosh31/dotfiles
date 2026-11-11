@@ -24,6 +24,8 @@ require("hypr.autostart")
 
 -- Toggle config flags dynamically.
 require("default.hypr.toggles")
+-- Prevent the Omarchy 4.5.0 startup-cursor / Hyprland 0.56.2 crash (#16941).
+omarchy_startup_cursor_pending = false
 
 -- Add any other personal Hyprland configuration below.
 -- o.window("qemu", { workspace = "5" })

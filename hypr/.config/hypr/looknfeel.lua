@@ -88,3 +88,22 @@ hl.animation({
   bezier = "smooth",
   style = "slidefade",
 })
+-- Opt another application in to Omarchy's standard transparency.
+-- Find its class with: hyprctl clients
+-- o.transparent_window("my-app")
+-- o.transparent_window("my-app", "0.9 0.85") -- Custom active/inactive opacity.
+
+-- Window border color: purple instead of the Tokyo Night blue.
+hl.config({
+  general = {
+    col = {
+      active_border = "#471e8c",
+    },
+  },
+
+  group = {
+    col = {
+      border_active = "#471e8c",
+    },
+  },
+})

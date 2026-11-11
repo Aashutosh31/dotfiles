@@ -1,8 +1,6 @@
 [tools]
-claude = "latest"
-codex = "latest"
-gemini = { version = "latest", allow_builds = ["@github/keytar", "node-pty"] }
 java = "latest"
-node = "latest"
-opencode = "latest"
+node = "26.13.0"
 python = "latest"
+
+[settings.upgrade]

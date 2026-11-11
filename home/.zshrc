@@ -81,3 +81,8 @@ alias fg='fd --glob'
 export EDITOR="code"
 export VISUAL="code"
 . "$HOME/.local/share/../bin/env"
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/home/aashutosh31/.lmstudio/bin"
+# End of LM Studio CLI section
+

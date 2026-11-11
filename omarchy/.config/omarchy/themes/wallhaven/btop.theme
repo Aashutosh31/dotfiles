@@ -1,0 +1,98 @@
+# Wallhaven-flavored btop theme.
+# Background matches the Tokyo Night terminal so btop sits seamlessly in it;
+# the accents come from the Wallhaven palette and wallpaper.
+
+# Main background, empty for terminal default, need to be empty if you want transparent background
+theme[main_bg]="#1a1b26"
+
+# Main text color
+theme[main_fg]="#FDC1D5"
+
+# Title color for boxes and the process-list header row (Pid:, Program:,
+# Threads:, User:, MemB/Mem%, Cpu%)
+theme[title]="#f0a0fa"
+
+# Highlight color for keyboard shortcuts
+theme[hi_fg]="#a980ce"
+
+# Background color of selected item in processes box
+theme[selected_bg]="#2a1f45"
+
+# Foreground color of selected item in processes box
+theme[selected_fg]="#FDC1D5"
+
+# Color of inactive/disabled text
+theme[inactive_fg]="#6b5a80"
+
+# Color of text appearing on top of graphs, i.e uptime and current network graph scaling
+theme[graph_text]="#fdcadb"
+
+# Background color of the percentage meters
+theme[meter_bg]="#2a1f45"
+
+# Misc colors for processes box including mini cpu graphs, details memory graph and details status text
+theme[proc_misc]="#d092d8"
+
+# CPU, Memory, Network, Proc box outline colors
+theme[cpu_box]="#A128A7"
+theme[mem_box]="#9070af"
+theme[net_box]="#D32897"
+theme[proc_box]="#a980ce"
+
+# Box divider line and small boxes line color
+theme[div_line]="#3a2a55"
+
+# Temperature graph color (Cool -> Warm -> Hot)
+theme[temp_start]="#ffa5b7"
+theme[temp_mid]="#D32897"
+theme[temp_end]="#f0a0fa"
+
+# CPU graph colors (Blue -> Purple -> Magenta)
+theme[cpu_start]="#2A41A6"
+theme[cpu_mid]="#9070af"
+theme[cpu_end]="#D32897"
+
+# Mem/Disk free meter (dark purple -> accent -> lavender)
+theme[free_start]="#471e8c"
+theme[free_mid]="#9070af"
+theme[free_end]="#CAA6D0"
+
+# Mem/Disk cached meter
+theme[cached_start]="#251756"
+theme[cached_mid]="#531F93"
+theme[cached_end]="#A128A7"
+
+# Mem/Disk available meter
+theme[available_start]="#9D1571"
+theme[available_mid]="#D32897"
+theme[available_end]="#f0a0fa"
+
+# Mem/Disk used meter (Blue -> Purple -> Magenta)
+theme[used_start]="#2A41A6"
+theme[used_mid]="#9070af"
+theme[used_end]="#D32897"
+
+# Download graph colors
+theme[download_start]="#2A41A6"
+theme[download_mid]="#9070af"
+theme[download_end]="#D32897"
+
+# Upload graph colors (Violet -> Orchid -> Bright magenta)
+theme[upload_start]="#531F93"
+theme[upload_mid]="#A128A7"
+theme[upload_end]="#f0a0fa"
+
+# Process box color gradient for threads, mem and cpu usage
+theme[process_start]="#f0a0fa"
+theme[process_mid]="#f0a0fa"
+theme[process_end]="#f0a0fa"
+
+# Graph gradient colors (spectrum shades from background to foreground)
+theme[gradient_color_0]="#1a1b26"
+theme[gradient_color_1]="#251756"
+theme[gradient_color_2]="#471e8c"
+theme[gradient_color_3]="#531F93"
+theme[gradient_color_4]="#9070af"
+theme[gradient_color_5]="#a980ce"
+theme[gradient_color_6]="#CAA6D0"
+theme[gradient_color_7]="#FDC1D5"
