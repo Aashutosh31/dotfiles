@@ -46,6 +46,6 @@ if status is-interactive
 end
 
 # Added by LM Studio CLI (lms)
-set -gx PATH $PATH /home/aashutosh31/.lmstudio/bin
+set -gx PATH $PATH $HOME/.lmstudio/bin
 # End of LM Studio CLI section
 

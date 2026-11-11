@@ -83,6 +83,6 @@ export VISUAL="code"
 . "$HOME/.local/share/../bin/env"
 
 # Added by LM Studio CLI (lms)
-export PATH="$PATH:/home/aashutosh31/.lmstudio/bin"
+export PATH="$PATH:$HOME/.lmstudio/bin"
 # End of LM Studio CLI section
 
