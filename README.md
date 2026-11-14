@@ -23,6 +23,8 @@
 
 [Demo Video](https://youtu.be/pNU84d3qIt0)
 
+📝 **Write-up:** [From a fresh Arch install to a fully configured environment in one command](https://dev.to/aashutosh_bairagi_31/from-a-fresh-arch-install-to-a-fully-configured-development-environment-in-one-command-4cg5)
+
 </div>
 
 ---
