@@ -186,6 +186,13 @@ shuffle, available-player switching, elapsed/total time, and a clickable seek
 bar. It uses Quickshell's standard MPRIS interface but has a personal
 presentation and interaction design.
 
+Chrome/Chromium YouTube Music and native MPRIS players expose the full
+timeline, so their progress and seeking work. Firefox's current YouTube Music
+MPRIS bridge exposes playback controls but reports no usable duration and a
+position of zero; the Media Deck therefore cannot provide a truthful live
+progress bar or seeking for that Firefox source. When Chrome and Firefox are
+both playing, the widget prefers the source with real timeline data.
+
 Source:
 
 ```text
