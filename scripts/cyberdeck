@@ -1,0 +1,128 @@
+#!/usr/bin/env bash
+#
+# cyberdeck — one toggle that gets every non-working pixel out of the way.
+#
+# On:  bar hidden, gaps 0, borders 0, inactive dimming off, notifications
+#      silenced, optional scanline/vignette screen shader.
+# Off: `hyprctl reload`, which restores gaps/border/dim from the config (the
+#      config stays the source of truth — this never leaves stale overrides
+#      behind), plus the bar and notification flags exactly as they were.
+#
+# The two HUD scratchpads (btop on Super+Ctrl+G, yazi on Super+Ctrl+Y) are
+# separate: they drop over the workspace and cost nothing while closed.
+#
+# Usage:
+#   cyberdeck [toggle|on|off|status]
+#
+# Environment:
+#   CYBERDECK_SHADER   shader path, or "none" to disable
+#                     (default: ~/.config/hypr/shaders/cyberdeck.glsl)
+
+set -euo pipefail
+
+STATE_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/cyberdeck"
+ACTIVE="$STATE_DIR/active"
+TOGGLES="$HOME/.local/state/omarchy/toggles"
+SHADER="${CYBERDECK_SHADER:-$HOME/.config/hypr/shaders/cyberdeck.glsl}"
+
+have() { command -v "$1" >/dev/null 2>&1; }
+
+hypr() { hyprctl eval "$1" >/dev/null 2>&1 || true; }
+osd() { omarchy osd -m "$1" -d 1200 >/dev/null 2>&1 || true; }
+dnd_state() { omarchy-shell notifications isDnd 2>/dev/null || echo off; }
+
+is_on() { [[ -f "$ACTIVE" ]]; }
+
+shader_enabled() {
+  [[ -n "$SHADER" && "$SHADER" != "none" && -f "$SHADER" ]]
+}
+
+enable() {
+  if is_on; then
+    echo "Cyberdeck is already on."
+    return 0
+  fi
+
+  if ! have hyprctl || ! pgrep -x Hyprland >/dev/null 2>&1; then
+    echo "error: Hyprland is not running." >&2
+    return 1
+  fi
+
+  mkdir -p "$STATE_DIR"
+
+  # Remember only what we are about to change, so off restores the user's
+  # previous choice instead of a hardcoded default.
+  {
+    echo "bar_was_hidden=$( [[ -f "$TOGGLES/bar-off" ]] && echo 1 || echo 0 )"
+    echo "dnd_was=$(dnd_state)"
+  } >"$ACTIVE"
+
+  # Hyprland 0.56 reads a Lua config, where `hyprctl keyword` is refused
+  # ("keyword can't work with non-legacy parsers"). eval is the supported
+  # runtime override; a reload drops it again.
+  local lua="hl.config({ general = { gaps_in = 0, gaps_out = 0, border_size = 0 }"
+  lua+=", decoration = { dim_inactive = false"
+  if shader_enabled; then
+    lua+=", screen_shader = '$SHADER'"
+  fi
+  lua+=" } })"
+  hypr "$lua"
+
+  # on hides the bar (see `omarchy toggle bar --help`).
+  omarchy toggle bar on >/dev/null 2>&1 || true
+  omarchy-shell notifications setDnd on >/dev/null 2>&1 || true
+
+  osd "CYBERDECK // ON"
+  echo "Cyberdeck on$(shader_enabled && echo ' (shader)'). Super+Ctrl+Shift+D to leave."
+}
+
+disable() {
+  if ! is_on; then
+    echo "Cyberdeck is already off."
+    return 0
+  fi
+
+  # shellcheck disable=SC1090
+  source "$ACTIVE"
+
+  [[ "${bar_was_hidden:-0}" == "1" ]] || omarchy toggle bar off >/dev/null 2>&1 || true
+  omarchy-shell notifications setDnd "${dnd_was:-off}" >/dev/null 2>&1 || true
+
+  # The config is the source of truth for gaps, borders and dimming, so a
+  # reload restores them — and the shader — without keeping a second copy of
+  # the numbers here.
+  if have hyprctl && pgrep -x Hyprland >/dev/null 2>&1; then
+    hyprctl reload >/dev/null 2>&1 || true
+  fi
+
+  rm -f "$ACTIVE"
+  osd "CYBERDECK // OFF"
+  echo "Cyberdeck off."
+}
+
+status() {
+  if is_on; then
+    echo "on"
+    [[ -f "$ACTIVE" ]] && sed 's/^/  /' "$ACTIVE"
+    if [[ -f "$TOGGLES/bar-off" ]]; then
+      echo "  bar: hidden"
+    else
+      echo "  bar: visible"
+    fi
+    echo "  notifications: $(dnd_state)"
+    shader_enabled && echo "  shader: $SHADER"
+  else
+    echo "off"
+  fi
+}
+
+case "${1:-toggle}" in
+  on)     enable ;;
+  off)    disable ;;
+  toggle) if is_on; then disable; else enable; fi ;;
+  status) status ;;
+  -h|--help|help)
+    sed -n '2,24p' "$0" | sed 's/^# \{0,1\}//'
+    ;;
+  *) echo "usage: cyberdeck [toggle|on|off|status]" >&2; exit 2 ;;
+esac

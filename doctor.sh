@@ -109,6 +109,17 @@ if [ -d "$ckpt_root" ]; then
 else
     warn "no checkpoints yet ($ckpt_root missing)"
 fi
+if command -v cyberdeck &>/dev/null; then
+    ok "cyberdeck -> $(command -v cyberdeck)"
+else
+    fail "cyberdeck not found in PATH (run install.sh)"
+fi
+cyberdeck_shader="${CYBERDECK_SHADER:-$HOME/.config/hypr/shaders/cyberdeck.glsl}"
+if [ -f "$cyberdeck_shader" ]; then
+    ok "cyberdeck shader present: $cyberdeck_shader"
+else
+    warn "cyberdeck shader missing: $cyberdeck_shader (mode still works, without the shader)"
+fi
 if command -v snapper &>/dev/null; then
     ok "snapper present (root btrfs snapshots)"
     if systemctl is-enabled limine-snapper-sync.service &>/dev/null; then

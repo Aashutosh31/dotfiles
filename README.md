@@ -249,6 +249,32 @@ as `<ts>-pre-undo`, so an undo can itself be undone.
 Note: snapper is configured for `SUBVOLUME="/"` only, so a root rollback does
 **not** touch `~/.config`. That is the gap the config layer fills.
 
+### `cyberdeck` — one toggle for the HUD look
+
+```bash
+cyberdeck            # toggle
+cyberdeck on|off|status
+```
+
+On: bar hidden, gaps and borders 0, inactive dimming off, notifications in DND,
+and `~/.config/hypr/shaders/cyberdeck.glsl` applied (scanlines + vignette, one
+texture fetch, no `time` uniform). Off: `hyprctl reload` restores gaps, borders
+and dimming from the config, and the bar/DND flags return to whatever they were.
+
+| Key | Does |
+| --- | --- |
+| <kbd>Super</kbd>+<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>D</kbd> | Cyberdeck on/off |
+| <kbd>Super</kbd>+<kbd>Ctrl</kbd>+<kbd>G</kbd> | btop HUD (`special:sysmon`) |
+| <kbd>Super</kbd>+<kbd>Ctrl</kbd>+<kbd>Y</kbd> | yazi HUD (`special:files`) |
+
+The two HUDs are floating scratchpads on their own special workspaces: nothing
+runs until the key is pressed, an already-running HUD is toggled rather than
+relaunched, and closing its app means the next press starts it again.
+
+The shader is self-contained. The 138 `~/.config/hypr/shaders/*.glsl` symlinks
+point at `/usr/share/aether/shaders/`, which is not installed on this machine,
+so Aether's shader picker has nothing to offer here.
+
 ---
 
 ## 🐚 Zsh Is Required

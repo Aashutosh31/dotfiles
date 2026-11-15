@@ -29,6 +29,12 @@
   // "about": {"icon":"","label":"About","action":"omarchy-launch-or-focus-tui \"zsh -c 'fastfetch; read -k 1'\""},
 
   "personal": {"icon":"\uf0c7","label":"Personal"},
+  "personal.cyberdeck": {
+    "icon":"\uf2db",
+    "label":"Cyberdeck mode",
+    "action":"cyberdeck toggle",
+    "description":"Bar and gaps off, scanline shader, notifications silenced"
+  },
   "personal.checkpoint": {
     "icon":"\uf0c7",
     "label":"Checkpoint now",

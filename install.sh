@@ -162,6 +162,11 @@ backup_item "$HOME/.local/bin/checkpoint"
 cp -f "$REPO/scripts/checkpoint" "$HOME/.local/bin/checkpoint"
 chmod +x "$HOME/.local/bin/checkpoint"
 
+# Cyberdeck mode: bar off, gaps 0, scanline shader; off restores from config
+backup_item "$HOME/.local/bin/cyberdeck"
+cp -f "$REPO/scripts/cyberdeck" "$HOME/.local/bin/cyberdeck"
+chmod +x "$HOME/.local/bin/cyberdeck"
+
 backup_item "$HOME/.zshrc"
 backup_item "$HOME/.XCompose"
 

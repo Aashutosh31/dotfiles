@@ -148,6 +148,67 @@ o.bind("SUPER + CTRL + SHIFT + S",
   "Checkpoint",
   "omarchy-launch-tui checkpoint --pause")
 
+-- Cyberdeck: hide the desktop furniture and apply the scanline shader.
+-- On-demand only — see scripts/cyberdeck for what it changes and restores.
+o.bind("SUPER + CTRL + SHIFT + D",
+  "Cyberdeck mode",
+  "cyberdeck toggle")
+
+-- HUD scratchpads. The window rule pins these terminals to their own special
+-- workspace, so the spawn works without relying on process tracking (Omarchy
+-- turns off misc.initial_workspace_tracking) and a HUD that is already running
+-- comes back instantly instead of being launched twice.
+--
+-- Omarchy floats every org.omarchy.* TUI and sizes it to 875x600 through the
+-- `floating-window` tag. That is the right default for a terminal popup and the
+-- wrong shape for a btop HUD, so the tag is dropped here and the size set
+-- explicitly; float and center are then restated rather than inherited.
+o.window("^(org\\.omarchy\\.btop)$", {
+  tag = "-floating-window",
+  float = true,
+  center = true,
+  size = { 1180, 640 },
+  opacity = "0.94 0.9",
+  workspace = "special:sysmon",
+})
+
+o.window("^(org\\.omarchy\\.yazi)$", {
+  tag = "-floating-window",
+  float = true,
+  center = true,
+  size = { 1000, 700 },
+  opacity = "0.94 0.9",
+  workspace = "special:files",
+})
+
+-- Open the HUD, and seed it on first use (or after its app was quit). The
+-- workspace persists, so an already-running btop costs one toggle, nothing else.
+local function hud_toggle(name, launch)
+  local ws = "special:" .. name
+
+  return function()
+    local active = hl.get_active_special_workspace()
+    local opening = not (active and active.name == ws)
+
+    hl.dispatch(hl.dsp.workspace.toggle_special(name))
+
+    if opening then
+      local windows = hl.get_workspace_windows(ws)
+      if not windows or #windows == 0 then
+        hl.exec_cmd(launch)
+      end
+    end
+  end
+end
+
+o.bind("SUPER + CTRL + G",
+  "System monitor HUD",
+  hud_toggle("sysmon", "omarchy-launch-tui btop"))
+
+o.bind("SUPER + CTRL + Y",
+  "File manager HUD",
+  hud_toggle("files", "omarchy-launch-tui yazi"))
+
 -- Dictation keys from before Alt + Space and Right Alt became the defaults.
 -- Remove these lines to give the keys back to applications.
 if o.dictation_installed and o.dictation_installed() then
