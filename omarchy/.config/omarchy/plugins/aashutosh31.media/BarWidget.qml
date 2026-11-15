@@ -1,0 +1,157 @@
+import QtQuick
+import Quickshell
+import Quickshell.Services.Mpris
+import qs.Commons
+import qs.Commons as Commons
+import qs.Ui
+
+// Personal media deck. The MPRIS service is standard, but the presentation,
+// size and interaction belong to this setup: one click opens the card.
+BarWidget {
+  id: root
+  moduleName: "aashutosh31.media"
+
+  readonly property var players: Mpris.players ? Mpris.players.values : []
+  readonly property var activePlayer: choosePlayer(players)
+  readonly property bool hasMedia: !!activePlayer && (!!activePlayer.trackTitle || !!activePlayer.trackArtist)
+  property bool popupOpen: false
+
+  function choosePlayer(list) {
+    for (var i = 0; i < list.length; i++)
+      if (list[i] && list[i].isPlaying) return list[i]
+    for (var j = 0; j < list.length; j++)
+      if (list[j] && (list[j].trackTitle || list[j].trackArtist)) return list[j]
+    return null
+  }
+
+  function playerLabel(player) {
+    return player ? (player.identity || player.desktopEntry || "Player") : "Player"
+  }
+
+  function playPause() {
+    if (!root.activePlayer) return
+    if (root.activePlayer.isPlaying && root.activePlayer.canPause) root.activePlayer.pause()
+    else if (!root.activePlayer.isPlaying && root.activePlayer.canPlay) root.activePlayer.play()
+    else if (root.activePlayer.canTogglePlaying) root.activePlayer.togglePlaying()
+  }
+
+  visible: hasMedia
+  implicitWidth: hasMedia ? Style.space(230) : 0
+  implicitHeight: barSize
+
+  Row {
+    anchors.centerIn: parent
+    spacing: Style.space(8)
+
+    Text {
+      text: root.activePlayer && root.activePlayer.isPlaying ? "󰏤" : "󰐊"
+      color: root.bar.barForeground
+      font.family: root.bar.fontFamily
+      font.pixelSize: Style.font.body
+      anchors.verticalCenter: parent.verticalCenter
+    }
+
+    Text {
+      text: root.activePlayer ? (root.activePlayer.trackTitle || "Now playing") : ""
+      color: root.bar.barForeground
+      font.family: root.bar.fontFamily
+      font.pixelSize: Style.font.body
+      elide: Text.ElideRight
+      width: Style.space(170)
+      anchors.verticalCenter: parent.verticalCenter
+    }
+  }
+
+  MouseArea {
+    anchors.fill: parent
+    acceptedButtons: Qt.LeftButton | Qt.MiddleButton | Qt.RightButton
+    onClicked: function(mouse) {
+      if (!root.activePlayer) return
+      if (mouse.button === Qt.MiddleButton && root.activePlayer.canGoNext) root.activePlayer.next()
+      else if (mouse.button === Qt.RightButton) root.playPause()
+      else root.popupOpen = !root.popupOpen
+    }
+  }
+
+  PopupCard {
+    id: popup
+    anchorItem: root
+    bar: root.bar
+    owner: root
+    open: root.popupOpen
+    contentWidth: popup.fittedContentWidth(Style.space(390))
+    contentHeight: popup.fittedContentHeight(deck.implicitHeight)
+
+    Column {
+      id: deck
+      anchors.fill: parent
+      spacing: Style.space(12)
+
+      Row {
+        width: parent.width
+        spacing: Style.space(12)
+
+        BorderSurface {
+          width: Style.space(78)
+          height: Style.space(78)
+          radius: Style.spacing.labelGap
+          color: Style.normalFillFor(root.bar.foreground, Commons.Color.accent)
+          borderSpec: Border.controlSpec("normal", root.bar.foreground, Commons.Color.accent)
+
+          SizedImage {
+            anchors.fill: parent
+            anchors.margins: Style.space(2)
+            crop: true
+            url: root.activePlayer && root.activePlayer.trackArtUrl ? root.activePlayer.trackArtUrl : ""
+            visible: url !== ""
+          }
+
+          Text {
+            anchors.centerIn: parent
+            visible: !root.activePlayer || !root.activePlayer.trackArtUrl
+            text: "󰝚"
+            color: root.bar.foreground
+            font.family: root.bar.fontFamily
+            font.pixelSize: Style.font.displayLarge
+          }
+        }
+
+        Column {
+          width: parent.width - Style.space(90)
+          spacing: Style.space(4)
+          anchors.verticalCenter: parent.verticalCenter
+
+          Text { text: root.activePlayer ? (root.activePlayer.trackTitle || "Nothing playing") : "Nothing playing"; color: root.bar.foreground; font.family: root.bar.fontFamily; font.pixelSize: Style.font.subtitle; font.bold: true; elide: Text.ElideRight; width: parent.width }
+          Text { text: root.activePlayer ? (root.activePlayer.trackArtist || "") : ""; color: Qt.darker(root.bar.foreground, 1.3); font.family: root.bar.fontFamily; font.pixelSize: Style.font.body; elide: Text.ElideRight; width: parent.width; visible: text !== "" }
+          Text { text: root.activePlayer ? (root.activePlayer.trackAlbum || "") : ""; color: Qt.darker(root.bar.foreground, 1.6); font.family: root.bar.fontFamily; font.pixelSize: Style.font.caption; elide: Text.ElideRight; width: parent.width; visible: text !== "" }
+        }
+      }
+
+      Row {
+        anchors.horizontalCenter: parent.horizontalCenter
+        spacing: Style.space(6)
+
+        Button { iconText: "󰒮"; foreground: root.bar.foreground; enabled: root.activePlayer && root.activePlayer.canGoPrevious; onClicked: root.activePlayer.previous() }
+        Button { iconText: "󰐊"; foreground: root.bar.foreground; iconSize: Style.font.iconLarge; onClicked: root.playPause() }
+        Button { iconText: "󰒭"; foreground: root.bar.foreground; enabled: root.activePlayer && root.activePlayer.canGoNext; onClicked: root.activePlayer.next() }
+        Button { iconText: "󰒝"; foreground: root.bar.foreground; enabled: root.activePlayer && root.activePlayer.shuffleSupported; onClicked: root.activePlayer.shuffle = !root.activePlayer.shuffle }
+      }
+
+      PanelSeparator { foreground: root.bar.foreground; visible: root.players.length > 1 }
+
+      Repeater {
+        model: root.players
+        delegate: Button {
+          required property var modelData
+          width: parent.width
+          text: root.playerLabel(modelData) + (modelData === root.activePlayer ? "  • ACTIVE" : "")
+          foreground: root.bar.foreground
+          visible: modelData.trackTitle || modelData.trackArtist
+          onClicked: { if (modelData.canPlay) modelData.play(); root.popupOpen = false }
+        }
+      }
+
+      Text { text: "Click the media pill to close"; color: Qt.darker(root.bar.foreground, 1.6); font.family: root.bar.fontFamily; font.pixelSize: Style.font.caption; anchors.horizontalCenter: parent.horizontalCenter }
+    }
+  }
+}

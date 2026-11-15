@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "id": "aashutosh31.media",
+  "name": "Media Deck",
+  "version": "1.0.0",
+  "author": "aashutosh31",
+  "description": "Personal compact MPRIS media controls",
+  "kinds": ["bar-widget"],
+  "entryPoints": {"barWidget": "BarWidget.qml"},
+  "barWidget": {
+    "displayName": "Media Deck",
+    "description": "Personal now-playing and media controls",
+    "category": "Media",
+    "allowMultiple": false,
+    "defaultSection": "centerEnd"
+  }
+}

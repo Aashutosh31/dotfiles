@@ -176,14 +176,20 @@ omarchy/.config/omarchy/extensions/omarchy-menu.jsonc
 They are personal convenience actions layered on top of Omarchy, while the
 underlying Omarchy files remain untouched.
 
-### Media controls
+### `aashutosh31.media` — personal Media Deck
 
-Omarchy's first-party `omarchy.media` widget is enabled beside the personal
-CPU widget. When Spotify, YouTube Music, or another MPRIS-compatible player
-is playing, it shows the current track in the bar. Click it for play/pause and
-the compact control popup; middle-click skips forward and the scroll wheel
-goes previous/next. It uses Omarchy's existing media service rather than
-duplicating it as a personal plugin.
+The personal Media Deck is placed beside `aashutosh31.cpu` in the middle/right
+bar group. When Spotify, YouTube Music, or another MPRIS-compatible player is
+playing, it shows a larger track pill. A single left-click opens its popup;
+the popup includes artwork, title, artist, album, previous, play/pause, next,
+shuffle, and available-player switching. It uses Quickshell's standard MPRIS
+interface but has a personal presentation and interaction design.
+
+Source:
+
+```text
+omarchy/.config/omarchy/plugins/aashutosh31.media/
+```
 
 ---
 
