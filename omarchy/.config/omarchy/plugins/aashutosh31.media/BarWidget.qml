@@ -61,10 +61,12 @@ BarWidget {
     ? Math.max(0, Math.min(1, liveSeconds / seconds(activePlayer.length))) : 0
 
   function seekAt(ratio) {
-    if (!activePlayer || !activePlayer.canSeek || !activePlayer.positionSupported || !activePlayer.lengthSupported) return
+    if (!activePlayer || !activePlayer.canSeek || !activePlayer.lengthSupported) return
     var length = Number(activePlayer.length) || 0
     var target = Math.max(0, Math.min(1, ratio)) * seconds(length)
-    activePlayer.position = target
+    var current = seconds(activePlayer.position)
+    if (activePlayer.positionSupported) activePlayer.position = target
+    else activePlayer.seek(target - current)
     root.liveSeconds = target
     root.anchorSeconds = target
     root.anchorMillis = Date.now()
@@ -218,6 +220,7 @@ BarWidget {
           maximum: 1
           step: 0.001
           value: root.progress
+          enabled: root.activePlayer && root.activePlayer.canSeek && root.activePlayer.lengthSupported
           trackColor: Qt.rgba(root.bar.foreground.r, root.bar.foreground.g, root.bar.foreground.b, 0.18)
           fillColor: Commons.Color.accent
           knobColor: root.bar.foreground
