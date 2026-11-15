@@ -157,6 +157,11 @@ mkdir -p "$HOME/.local/bin"
 cp -f "$REPO/scripts/omarchy-launch-about" "$HOME/.local/bin/omarchy-launch-about"
 chmod +x "$HOME/.local/bin/omarchy-launch-about"
 
+# Checkpoint / undo: one-command snapshot of every config this repo owns
+backup_item "$HOME/.local/bin/checkpoint"
+cp -f "$REPO/scripts/checkpoint" "$HOME/.local/bin/checkpoint"
+chmod +x "$HOME/.local/bin/checkpoint"
+
 backup_item "$HOME/.zshrc"
 backup_item "$HOME/.XCompose"
 

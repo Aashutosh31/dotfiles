@@ -29,6 +29,7 @@ local custom = {
   "SUPER + SHIFT + X",
   "SUPER + SHIFT + ALT + X",
 
+  "SUPER + CTRL + SHIFT + S",
   "SUPER + H",
 }
 
@@ -139,6 +140,13 @@ o.bind("SUPER + SHIFT + ALT + X",
 o.bind("SUPER + H",
   nil,
   "voxtype record toggle")
+
+-- Snapshot every config this repo owns, plus a bootable root snapshot.
+-- Runs in a terminal on purpose: snapper needs a TTY for the sudo prompt.
+-- Restore with `checkpoint undo` (or Personal → Undo last checkpoint).
+o.bind("SUPER + CTRL + SHIFT + S",
+  "Checkpoint",
+  "omarchy-launch-tui checkpoint --pause")
 
 -- Dictation keys from before Alt + Space and Right Alt became the defaults.
 -- Remove these lines to give the keys back to applications.

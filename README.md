@@ -200,6 +200,7 @@ Checks, without touching anything:
 | zsh-autosuggestions / zsh-syntax-highlighting plugin files | FAIL if missing |
 | Installed shell configs match the repo             | WARN on drift |
 | Broken symlinks under `~/.config`                  | WARN |
+| `checkpoint` on `$PATH`, checkpoint count, snapper + Limine boot sync | WARN |
 
 Exit code is non-zero when any required component is missing, so you can use it in scripts or CI.
 
@@ -218,6 +219,35 @@ Safe and idempotent — run it as many times as you like; unchanged state prints
 5. Re-applies only the shell-related configs (`.zshrc`, `.XCompose`, starship, fish, mise, atuin) — each backed up before being overwritten.
 
 It never runs a system upgrade, never deletes home/config data, and exits non-zero if anything could not be fixed.
+
+### `checkpoint` — one-command snapshot & undo
+
+```bash
+checkpoint                 # configs + manifest + git tag (+ root snapshot on a TTY)
+checkpoint --full          # also a read-only btrfs snapshot of /home
+checkpoint list
+checkpoint verify
+checkpoint undo [<ts>]
+```
+
+Or press <kbd>Super</kbd>+<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>S</kbd>, or use
+**Personal → Checkpoint now** / **Undo last checkpoint** in the Omarchy menu.
+
+Three layers, because one is not enough:
+
+| Layer | Covers | Notes |
+| --- | --- | --- |
+| Configs | the ~29 MB this repo owns (`hypr`, `omarchy`, `ghostty`, `zellij`, `tmux`, `btop`, `nvim`, `yazi`, `fish`, `starship.toml`, `~/.local/bin/checkpoint`, toggle flags) | `~/.dotfiles-backup/<ts>/` plus a `checkpoint/<ts>` git tag. No root needed. |
+| System | packages, `/usr`, system config | `omarchy snapshot create` → snapper → **selectable in the Limine boot menu**. Needs a TTY for the sudo prompt. |
+| `/home` | everything in your home directory | `--full` only. Read-only btrfs snapshot in `/.snapshots-home/`; CoW, so effectively free. |
+
+`undo` restores the config layer with `rsync --delete` (files added after the
+checkpoint are removed too), reloads Hyprland, restarts the shell, and fails
+loudly if `hyprctl configerrors` is non-empty. It first saves the current state
+as `<ts>-pre-undo`, so an undo can itself be undone.
+
+Note: snapper is configured for `SUBVOLUME="/"` only, so a root rollback does
+**not** touch `~/.config`. That is the gap the config layer fills.
 
 ---
 
@@ -319,7 +349,7 @@ In short: `bootstrap.sh` gets a bare Arch install to the point where `install.sh
 ├── omarchy/       # shell, bar plugin, theme, hooks, theme.name
 ├── bootstrap.sh   # one-shot installer for fresh machines
 ├── packages/       # pacman.txt, aur.txt
-├── scripts/       # omarchy-launch-about, lib/shell-env.sh
+├── scripts/       # checkpoint, omarchy-launch-about, lib/shell-env.sh
 ├── starship/
 ├── tmux/
 ├── voxtype/

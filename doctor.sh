@@ -90,6 +90,37 @@ for c in zsh starship zoxide atuin yazi mise eza bat fd fzf git; do
 done
 
 # ---------------------------------------------------------------
+# Recovery tooling
+# ---------------------------------------------------------------
+header "Recovery"
+if command -v checkpoint &>/dev/null; then
+    ok "checkpoint -> $(command -v checkpoint)"
+else
+    fail "checkpoint not found in PATH (run install.sh)"
+fi
+ckpt_root="${CHECKPOINT_ROOT:-$HOME/.dotfiles-backup}"
+if [ -d "$ckpt_root" ]; then
+    n="$(find "$ckpt_root" -mindepth 3 -maxdepth 3 -name manifest.txt -path '*/meta/*' 2>/dev/null | wc -l)"
+    if [ "$n" -gt 0 ]; then
+        ok "$n checkpoint(s) in $ckpt_root"
+    else
+        warn "no checkpoints yet in $ckpt_root (create one with: checkpoint)"
+    fi
+else
+    warn "no checkpoints yet ($ckpt_root missing)"
+fi
+if command -v snapper &>/dev/null; then
+    ok "snapper present (root btrfs snapshots)"
+    if systemctl is-enabled limine-snapper-sync.service &>/dev/null; then
+        ok "limine-snapper-sync enabled (snapshots selectable at boot)"
+    else
+        warn "limine-snapper-sync not enabled — root snapshots will not appear in the boot menu"
+    fi
+else
+    warn "snapper not installed — no bootable system snapshots"
+fi
+
+# ---------------------------------------------------------------
 # Zsh availability & login shell selection
 # ---------------------------------------------------------------
 header "Zsh / login shell"
