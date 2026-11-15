@@ -35,6 +35,12 @@
     "action":"cyberdeck toggle",
     "description":"Bar and gaps off, scanline shader, notifications silenced"
   },
+  "personal.telemetry": {
+    "icon":"\uf201",
+    "label":"Telemetry HUD",
+    "action":"omarchy-shell shell toggle aashutosh31.telemetry",
+    "description":"Open live CPU, memory and network information without changing the bar"
+  },
   "personal.checkpoint": {
     "icon":"\uf0c7",
     "label":"Checkpoint now",

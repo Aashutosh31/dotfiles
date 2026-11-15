@@ -111,6 +111,10 @@
     "lock": 300,
     "screensaver": 150
   },
-  "plugins": [],
+  "plugins": [
+    {
+      "id": "aashutosh31.telemetry"
+    }
+  ],
   "version": 1
 }

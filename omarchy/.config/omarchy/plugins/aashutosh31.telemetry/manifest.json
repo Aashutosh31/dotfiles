@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "id": "aashutosh31.telemetry",
+  "name": "Telemetry HUD",
+  "version": "1.0.0",
+  "author": "aashutosh31",
+  "description": "On-demand CPU, memory and network HUD",
+  "kinds": ["panel"],
+  "entryPoints": {"panel": "Panel.qml"}
+}
