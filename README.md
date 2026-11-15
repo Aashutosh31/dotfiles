@@ -34,6 +34,7 @@
 - [Screenshots](#-screenshots)
 - [Features](#-features)
 - [Included Configurations](#-included-configurations)
+- [Personal Omarchy Plugins](#-personal-omarchy-plugins)
 - [Installation](#-installation)
 - [Updating an Existing Installation](#-updating-an-existing-installation)
 - [🩺 Diagnose & Repair](#-diagnose--repair)
@@ -129,6 +130,27 @@ alacritty · atuin · btop · fastfetch · fish · foot · ghostty · hyprland
 kitty · lazydocker · lazygit · mise · mpv · neovim · omarchy · starship
 tmux · voxtype · VS Code · yazi · zellij · zsh
 ```
+
+## 🧩 Personal Omarchy Plugins
+
+This repository includes personal extensions created for **Aashutosh31's own
+Omarchy setup**. They are not part of the original Omarchy distribution.
+
+### `aashutosh31.cpu` — CPU bar widget
+
+Created and maintained by **Aashutosh31**. It adds a small live CPU indicator
+to the bar. Clicking it opens `btop`; if btop is already running, it focuses
+the existing window instead of starting another one.
+
+Source:
+
+```text
+omarchy/.config/omarchy/plugins/aashutosh31.cpu/
+```
+
+The plugin is intentionally namespaced `aashutosh31.cpu` so it is clearly
+separate from first-party `omarchy.*` plugins. Its manifest also records
+`aashutosh31` as the author.
 
 ---
 
