@@ -15,6 +15,7 @@ BarWidget {
   readonly property var activePlayer: choosePlayer(players)
   readonly property bool hasMedia: !!activePlayer && (!!activePlayer.trackTitle || !!activePlayer.trackArtist)
   property bool popupOpen: false
+  property real livePosition: activePlayer ? Number(activePlayer.position) || 0 : 0
 
   function close() {
     popupOpen = false
@@ -52,12 +53,21 @@ BarWidget {
   }
 
   readonly property real progress: activePlayer && activePlayer.lengthSupported && seconds(activePlayer.length) > 0
-    ? Math.max(0, Math.min(1, seconds(activePlayer.position) / seconds(activePlayer.length))) : 0
+    ? Math.max(0, Math.min(1, seconds(livePosition) / seconds(activePlayer.length))) : 0
 
   function seekAt(ratio) {
     if (!activePlayer || !activePlayer.positionSupported || !activePlayer.lengthSupported) return
     var length = Number(activePlayer.length) || 0
     activePlayer.position = Math.max(0, Math.min(1, ratio)) * length
+    livePosition = activePlayer.position
+  }
+
+  Timer {
+    interval: 500
+    running: root.popupOpen && root.hasMedia
+    repeat: true
+    triggeredOnStart: true
+    onTriggered: root.livePosition = root.activePlayer ? Number(root.activePlayer.position) || 0 : 0
   }
 
   visible: hasMedia
@@ -187,7 +197,7 @@ BarWidget {
 
         Row {
           width: parent.width
-          Text { id: elapsed; text: root.activePlayer ? root.timeLabel(root.activePlayer.position) : "0:00"; color: Qt.darker(root.bar.foreground, 1.4); font.family: root.bar.fontFamily; font.pixelSize: Style.font.caption }
+          Text { id: elapsed; text: root.activePlayer ? root.timeLabel(root.livePosition) : "0:00"; color: Qt.darker(root.bar.foreground, 1.4); font.family: root.bar.fontFamily; font.pixelSize: Style.font.caption }
           Item { width: parent.width - elapsed.width - total.width; height: 1 }
           Text { id: total; text: root.activePlayer ? root.timeLabel(root.activePlayer.length) : "0:00"; color: Qt.darker(root.bar.foreground, 1.4); font.family: root.bar.fontFamily; font.pixelSize: Style.font.caption }
         }
