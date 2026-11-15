@@ -39,6 +39,27 @@ BarWidget {
     else if (root.activePlayer.canTogglePlaying) root.activePlayer.togglePlaying()
   }
 
+  function seconds(value) {
+    var n = Number(value) || 0
+    return n > 100000 ? n / 1000000 : n
+  }
+
+  function timeLabel(value) {
+    var total = Math.max(0, Math.floor(seconds(value)))
+    var minutes = Math.floor(total / 60)
+    var secs = total % 60
+    return minutes + ":" + (secs < 10 ? "0" : "") + secs
+  }
+
+  readonly property real progress: activePlayer && activePlayer.lengthSupported && seconds(activePlayer.length) > 0
+    ? Math.max(0, Math.min(1, seconds(activePlayer.position) / seconds(activePlayer.length))) : 0
+
+  function seekAt(ratio) {
+    if (!activePlayer || !activePlayer.positionSupported || !activePlayer.lengthSupported) return
+    var length = Number(activePlayer.length) || 0
+    activePlayer.position = Math.max(0, Math.min(1, ratio)) * length
+  }
+
   visible: hasMedia
   implicitWidth: hasMedia ? Style.space(230) : 0
   implicitHeight: barSize
@@ -139,6 +160,37 @@ BarWidget {
         Button { iconText: root.activePlayer && root.activePlayer.isPlaying ? "󰏤" : "󰐊"; foreground: root.bar.foreground; iconSize: Style.font.iconLarge; onClicked: root.playPause() }
         Button { iconText: "󰒭"; foreground: root.bar.foreground; enabled: root.activePlayer && root.activePlayer.canGoNext; onClicked: root.activePlayer.next() }
         Button { iconText: "󰒝"; foreground: root.bar.foreground; enabled: root.activePlayer && root.activePlayer.shuffleSupported; onClicked: root.activePlayer.shuffle = !root.activePlayer.shuffle }
+      }
+
+      Column {
+        width: parent.width
+        spacing: Style.space(4)
+
+        Rectangle {
+          width: parent.width
+          height: Style.space(5)
+          radius: height / 2
+          color: Qt.rgba(root.bar.foreground.r, root.bar.foreground.g, root.bar.foreground.b, 0.18)
+
+          Rectangle {
+            width: parent.width * root.progress
+            height: parent.height
+            radius: parent.radius
+            color: Commons.Color.accent
+          }
+
+          MouseArea {
+            anchors.fill: parent
+            onClicked: root.seekAt(mouse.x / width)
+          }
+        }
+
+        Row {
+          width: parent.width
+          Text { id: elapsed; text: root.activePlayer ? root.timeLabel(root.activePlayer.position) : "0:00"; color: Qt.darker(root.bar.foreground, 1.4); font.family: root.bar.fontFamily; font.pixelSize: Style.font.caption }
+          Item { width: parent.width - elapsed.width - total.width; height: 1 }
+          Text { id: total; text: root.activePlayer ? root.timeLabel(root.activePlayer.length) : "0:00"; color: Qt.darker(root.bar.foreground, 1.4); font.family: root.bar.fontFamily; font.pixelSize: Style.font.caption }
+        }
       }
 
       PanelSeparator { foreground: root.bar.foreground; visible: root.players.length > 1 }

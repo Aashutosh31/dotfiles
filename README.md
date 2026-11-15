@@ -182,8 +182,9 @@ The personal Media Deck is placed in the centered bar group beside the clock.
 When Spotify, YouTube Music, or another MPRIS-compatible player is
 playing, it shows a larger track pill. A single left-click opens its popup;
 the popup includes artwork, title, artist, album, previous, play/pause, next,
-shuffle, and available-player switching. It uses Quickshell's standard MPRIS
-interface but has a personal presentation and interaction design.
+shuffle, available-player switching, elapsed/total time, and a clickable seek
+bar. It uses Quickshell's standard MPRIS interface but has a personal
+presentation and interaction design.
 
 Source:
 
