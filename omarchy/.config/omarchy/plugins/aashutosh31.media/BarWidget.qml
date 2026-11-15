@@ -64,9 +64,7 @@ BarWidget {
     if (!activePlayer || !activePlayer.canSeek || !activePlayer.lengthSupported) return
     var length = Number(activePlayer.length) || 0
     var target = Math.max(0, Math.min(1, ratio)) * seconds(length)
-    var current = seconds(activePlayer.position)
-    if (activePlayer.positionSupported) activePlayer.position = target
-    else activePlayer.seek(target - current)
+    activePlayer.seek(target - root.liveSeconds)
     root.liveSeconds = target
     root.anchorSeconds = target
     root.anchorMillis = Date.now()
@@ -86,6 +84,7 @@ BarWidget {
     if (!activePlayer) return
     var now = Date.now()
     if (seeking && now < seekGraceUntil) return
+    activePlayer.positionChanged()
     var reported = seconds(activePlayer.position)
     var track = activePlayer.trackTitle + "\u0000" + activePlayer.trackArtist
     var newTrack = track !== timelineTrack
