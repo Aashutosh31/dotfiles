@@ -28,10 +28,16 @@ BarWidget {
   }
 
   function choosePlayer(list) {
+    // Prefer a playing source with a real timeline. Firefox's MPRIS bridge can
+    // say Playing while reporting position 0 and no duration; Chrome exposes
+    // the actual YouTube Music timeline, so it must win when both are open.
     for (var i = 0; i < list.length; i++)
-      if (list[i] && list[i].isPlaying) return list[i]
+      if (list[i] && list[i].isPlaying && list[i].lengthSupported && list[i].positionSupported && list[i].canSeek)
+        return list[i]
     for (var j = 0; j < list.length; j++)
-      if (list[j] && (list[j].trackTitle || list[j].trackArtist)) return list[j]
+      if (list[j] && list[j].isPlaying) return list[j]
+    for (var k = 0; k < list.length; k++)
+      if (list[k] && (list[k].trackTitle || list[k].trackArtist)) return list[k]
     return null
   }
 
