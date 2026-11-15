@@ -49,6 +49,6 @@ selection-color      = "accent"
 selection-fill-alpha = 0.25
 
 [bar]
-size-horizontal = 30      # top/bottom bar height
+size-horizontal = 26      # top/bottom bar height
 size-vertical   = 30      # left/right bar width, if you ever flip orientation
 scale-with-font = true

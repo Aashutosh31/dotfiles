@@ -1,22 +1,16 @@
 # ==========================================================
 #        Aashutosh Developer Cockpit
 # ==========================================================
+#
+# One line, on purpose. On a 15" 1080p panel every extra prompt row is a
+# row of code you cannot see. Language versions render inline instead of
+# on their own line, and add_newline is off: no blank line above the prompt.
 
-add_newline = true
+add_newline = false
 
 palette = "tokyonight"
 
-format = """
-$directory\
-$git_branch\
-$git_status\
-$nodejs\
-$python\
-$rust\
-$docker_context\
-$cmd_duration\
-$character
-"""
+format = '$directory$git_branch$git_status$nodejs$python$rust$docker_context$cmd_duration$character'
 
 [palettes.tokyonight]
 fg      = "#c0caf5"
@@ -29,9 +23,6 @@ red     = "#f7768e"
 yellow  = "#e0af68"
 grey    = "#565f89"
 
-[fill]
-symbol = "─"
-
 [directory]
 style = "blue bold"
 format = "[󰉋 $path]($style)"
@@ -42,7 +33,7 @@ home_symbol = "~"
 [git_branch]
 symbol = "󰘬 "
 style = "purple bold"
-format = "[└─ $symbol$branch]($style)"
+format = " [$symbol$branch]($style)"
 
 [git_status]
 style = "yellow bold"
@@ -50,22 +41,27 @@ style = "yellow bold"
 [nodejs]
 symbol = " "
 style = "green bold"
-format = "\n[$symbol($version )]($style)"
+format = "[$symbol($version )]($style)"
 
 [python]
 symbol = "🐍 "
 style = "yellow bold"
-format = "\n[$symbol${pyenv_prefix}(${version})]($style)"
+format = "[$symbol${pyenv_prefix}(${version})]($style)"
 
 [rust]
 symbol = "🦀 "
 style = "orange bold"
-format = "\n[$symbol($version)]($style)"
+format = "[$symbol($version)]($style)"
 
 [docker_context]
 symbol = "🐳 "
 style = "cyan bold"
-format = "\n[$symbol$context]($style)"
+format = "[$symbol$context]($style)"
+
+[cmd_duration]
+min_time = 2000
+style = "grey"
+format = " took [$duration]($style)"
 
 [character]
 success_symbol = "[❯](green bold)"

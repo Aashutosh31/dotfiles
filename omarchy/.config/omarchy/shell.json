@@ -6,16 +6,20 @@
     "layout": {
       "center": [
         {
-          "id": "omarchy.indicators"
-        },
-        {
           "birthYear": 2005,
           "format": "ddd d MMM h:mm AP",
           "formatAlt": "d MMMM 'W'ww yyyy",
           "id": "omarchy.clock",
           "lifeExpectancy": 80,
           "verticalFormat": "HH\n—\nmm"
-        },
+        }
+      ],
+      "centerBegin": [
+        {
+          "id": "omarchy.indicators"
+        }
+      ],
+      "centerEnd": [
         {
           "id": "omarchy.elsewhen",
           "cities": [
@@ -27,16 +31,16 @@
               "region": "Madhya Pradesh, IN"
             },
             {
-              "name": "New York",
-              "zone": "America/New_York"
-            },
-            {
               "name": "Tokyo",
               "zone": "Asia/Tokyo"
             },
             {
               "name": "Los Angeles",
               "zone": "America/Los_Angeles"
+            },
+            {
+              "name": "New York",
+              "zone": "America/New_York"
             },
             {
               "name": "London",
@@ -58,8 +62,6 @@
           "id": "omarchy.system-update"
         }
       ],
-      "centerBegin": [],
-      "centerEnd": [],
       "left": [
         {
           "id": "omarchy.menu"
