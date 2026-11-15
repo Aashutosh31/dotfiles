@@ -83,7 +83,7 @@ BarWidget {
   function refreshTimeline() {
     if (!activePlayer) return
     var now = Date.now()
-    if (seeking && now < seekGraceUntil) return
+    if (now < seekGraceUntil) return
     activePlayer.positionChanged()
     var reported = seconds(activePlayer.position)
     var track = activePlayer.trackTitle + "\u0000" + activePlayer.trackArtist
