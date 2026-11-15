@@ -152,6 +152,30 @@ The plugin is intentionally namespaced `aashutosh31.cpu` so it is clearly
 separate from first-party `omarchy.*` plugins. Its manifest also records
 `aashutosh31` as the author.
 
+### Personal menu extensions
+
+The **Personal** menu in this setup is also custom work from this repository;
+it is not part of a fresh Omarchy installation. It contains:
+
+- **Cyberdeck mode** — temporarily hides the bar, removes window gaps and
+  applies the lightweight cyberdeck screen effect. Choosing it again restores
+  the normal desktop.
+- **Checkpoint now** — saves the current Omarchy configuration before trying
+  a risky change.
+- **Checkpoint + all of /home** — makes the larger, extra-cautious backup that
+  also covers the home folder.
+- **Undo last checkpoint** — returns the configuration to the last saved
+  checkpoint if a change went wrong.
+
+These entries are defined in:
+
+```text
+omarchy/.config/omarchy/extensions/omarchy-menu.jsonc
+```
+
+They are personal convenience actions layered on top of Omarchy, while the
+underlying Omarchy files remain untouched.
+
 ---
 
 ## 📥 Installation

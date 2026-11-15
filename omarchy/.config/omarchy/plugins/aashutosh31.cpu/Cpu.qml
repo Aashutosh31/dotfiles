@@ -57,7 +57,7 @@ BarWidget {
 
   function toggleBtop() {
     if (!root.bar) return
-    root.bar.run("pgrep -x btop > /dev/null && hyprctl dispatch focuswindow class:btop || omarchy-launch-floating-terminal-with-presentation btop")
+    root.bar.run("pgrep -x btop > /dev/null && hyprctl eval 'hl.dispatch(hl.dsp.focus({ window = \"class:org.omarchy.btop\" }))' || omarchy-launch-tui btop")
   }
 
   BarIconButton {
