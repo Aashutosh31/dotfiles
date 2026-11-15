@@ -178,8 +178,8 @@ underlying Omarchy files remain untouched.
 
 ### `aashutosh31.media` — personal Media Deck
 
-The personal Media Deck is placed beside `aashutosh31.cpu` in the middle/right
-bar group. When Spotify, YouTube Music, or another MPRIS-compatible player is
+The personal Media Deck is placed in the centered bar group beside the clock.
+When Spotify, YouTube Music, or another MPRIS-compatible player is
 playing, it shows a larger track pill. A single left-click opens its popup;
 the popup includes artwork, title, artist, album, previous, play/pause, next,
 shuffle, and available-player switching. It uses Quickshell's standard MPRIS

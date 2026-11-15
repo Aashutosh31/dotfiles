@@ -17,6 +17,9 @@
           "verticalFormat": "HH\n—\nmm"
         },
         {
+          "id": "aashutosh31.media"
+        },
+        {
           "id": "omarchy.elsewhen",
           "cities": [
             {
@@ -82,9 +85,6 @@
           "id": "aashutosh31.cpu"
         },
         {
-          "id": "aashutosh31.media"
-        },
-        {
           "id": "omarchy.tailscale"
         },
         {
@@ -105,7 +105,8 @@
       ],
       "tray": []
     },
-    "position": "top"
+    "position": "top",
+    "transparent": false
   },
   "dock": {
     "autohide": true

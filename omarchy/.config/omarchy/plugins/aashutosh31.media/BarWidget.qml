@@ -16,6 +16,10 @@ BarWidget {
   readonly property bool hasMedia: !!activePlayer && (!!activePlayer.trackTitle || !!activePlayer.trackArtist)
   property bool popupOpen: false
 
+  function close() {
+    popupOpen = false
+  }
+
   function choosePlayer(list) {
     for (var i = 0; i < list.length; i++)
       if (list[i] && list[i].isPlaying) return list[i]

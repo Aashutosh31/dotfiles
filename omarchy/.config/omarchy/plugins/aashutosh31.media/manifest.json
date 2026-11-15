@@ -12,6 +12,6 @@
     "description": "Personal now-playing and media controls",
     "category": "Media",
     "allowMultiple": false,
-    "defaultSection": "centerEnd"
+    "defaultSection": "center"
   }
 }
