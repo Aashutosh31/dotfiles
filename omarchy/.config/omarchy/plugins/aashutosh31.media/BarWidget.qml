@@ -47,8 +47,7 @@ BarWidget {
   }
 
   function seconds(value) {
-    var n = Number(value) || 0
-    return n > 100000 ? n / 1000000 : n
+    return Number(value) || 0
   }
 
   function timeLabel(value) {
@@ -62,10 +61,10 @@ BarWidget {
     ? Math.max(0, Math.min(1, liveSeconds / seconds(activePlayer.length))) : 0
 
   function seekAt(ratio) {
-    if (!activePlayer || !activePlayer.positionSupported || !activePlayer.lengthSupported) return
+    if (!activePlayer || !activePlayer.canSeek || !activePlayer.positionSupported || !activePlayer.lengthSupported) return
     var length = Number(activePlayer.length) || 0
     var target = Math.max(0, Math.min(1, ratio)) * seconds(length)
-    activePlayer.position = length > 100000 ? target * 1000000 : target
+    activePlayer.position = target
     root.liveSeconds = target
     root.anchorSeconds = target
     root.anchorMillis = Date.now()
