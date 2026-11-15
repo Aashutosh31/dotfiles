@@ -20,6 +20,8 @@ BarWidget {
   property real anchorMillis: 0
   property real lastObservedSeconds: -1
   property string timelineTrack: ""
+  property bool seeking: false
+  property double seekGraceUntil: 0
 
   function close() {
     popupOpen = false
@@ -67,6 +69,8 @@ BarWidget {
     root.liveSeconds = target
     root.anchorSeconds = target
     root.anchorMillis = Date.now()
+    root.lastObservedSeconds = target
+    root.seekGraceUntil = Date.now() + 1500
   }
 
   Timer {
@@ -80,6 +84,7 @@ BarWidget {
   function refreshTimeline() {
     if (!activePlayer) return
     var now = Date.now()
+    if (seeking && now < seekGraceUntil) return
     var reported = seconds(activePlayer.position)
     var track = activePlayer.trackTitle + "\u0000" + activePlayer.trackArtist
     var newTrack = track !== timelineTrack
@@ -206,22 +211,24 @@ BarWidget {
         width: parent.width
         spacing: Style.space(4)
 
-        Rectangle {
+        PanelSlider {
+          id: progressSlider
+          bar: root.bar
           width: parent.width
-          height: Style.space(5)
-          radius: height / 2
-          color: Qt.rgba(root.bar.foreground.r, root.bar.foreground.g, root.bar.foreground.b, 0.18)
-
-          Rectangle {
-            width: parent.width * root.progress
-            height: parent.height
-            radius: parent.radius
-            color: Commons.Color.accent
+          minimum: 0
+          maximum: 1
+          step: 0.001
+          value: root.progress
+          trackColor: Qt.rgba(root.bar.foreground.r, root.bar.foreground.g, root.bar.foreground.b, 0.18)
+          fillColor: Commons.Color.accent
+          knobColor: root.bar.foreground
+          onMoved: function(value) {
+            root.seeking = true
+            root.seekAt(value)
           }
-
-          MouseArea {
-            anchors.fill: parent
-            onClicked: root.seekAt(mouse.x / width)
+          onReleased: function(value) {
+            root.seekAt(value)
+            root.seeking = false
           }
         }
 
