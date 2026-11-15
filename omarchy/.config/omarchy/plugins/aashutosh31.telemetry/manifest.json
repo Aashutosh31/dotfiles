@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "id": "aashutosh31.telemetry",
+  "name": "Telemetry",
+  "version": "1.0.0",
+  "author": "aashutosh31",
+  "description": "CPU, memory and network usage",
+  "kinds": ["bar-widget"],
+  "entryPoints": {"barWidget": "Panel.qml"},
+  "barWidget": {
+    "displayName": "Telemetry",
+    "description": "CPU, memory and network usage",
+    "category": "System",
+    "allowMultiple": false,
+    "defaultSection": "right"
+  }
+}

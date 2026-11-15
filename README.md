@@ -275,6 +275,25 @@ The shader is self-contained. The 138 `~/.config/hypr/shaders/*.glsl` symlinks
 point at `/usr/share/aether/shaders/`, which is not installed on this machine,
 so Aether's shader picker has nothing to offer here.
 
+### Telemetry bar widget
+
+Stage 3 adds `aashutosh31.telemetry`, a small bar widget showing CPU, memory,
+and network activity. It replaces the existing CPU widget in the checked-in
+bar layout without removing any of the other bar features. To switch between
+the two widgets:
+
+```bash
+telemetry-switch telemetry   # use CPU/memory/network telemetry
+telemetry-switch cpu         # return to the existing CPU widget
+```
+
+To place the telemetry widget manually without switching, use:
+
+```bash
+omarchy plugin enable aashutosh31.telemetry
+omarchy bar put aashutosh31.telemetry --section right
+```
+
 ---
 
 ## 🐚 Zsh Is Required
