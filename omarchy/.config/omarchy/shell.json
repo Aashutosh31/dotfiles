@@ -82,6 +82,9 @@
           "id": "aashutosh31.cpu"
         },
         {
+          "id": "omarchy.media"
+        },
+        {
           "id": "omarchy.tailscale"
         },
         {
@@ -111,10 +114,6 @@
     "lock": 300,
     "screensaver": 150
   },
-  "plugins": [
-    {
-      "id": "aashutosh31.telemetry"
-    }
-  ],
+  "plugins": [],
   "version": 1
 }

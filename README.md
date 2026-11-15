@@ -176,25 +176,14 @@ omarchy/.config/omarchy/extensions/omarchy-menu.jsonc
 They are personal convenience actions layered on top of Omarchy, while the
 underlying Omarchy files remain untouched.
 
-### `aashutosh31.telemetry` — on-demand telemetry HUD
+### Media controls
 
-Stage 3 is an isolated panel, not a bar replacement. It shows live CPU,
-memory, and network information in a centered HUD only when opened. It does
-not remove or rearrange the clock, world clock, calendar, weather, indicators,
-CPU widget, or any other bar feature.
-
-Open or close it with:
-
-```bash
-omarchy-shell shell toggle aashutosh31.telemetry
-```
-
-It is also available as **Personal → Telemetry HUD**. Press `Esc` or click
-outside the card to close it. Its source is under:
-
-```text
-omarchy/.config/omarchy/plugins/aashutosh31.telemetry/
-```
+Omarchy's first-party `omarchy.media` widget is enabled beside the personal
+CPU widget. When Spotify, YouTube Music, or another MPRIS-compatible player
+is playing, it shows the current track in the bar. Click it for play/pause and
+the compact control popup; middle-click skips forward and the scroll wheel
+goes previous/next. It uses Omarchy's existing media service rather than
+duplicating it as a personal plugin.
 
 ---
 
