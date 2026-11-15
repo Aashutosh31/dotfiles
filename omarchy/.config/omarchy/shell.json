@@ -76,10 +76,10 @@
           "id": "omarchy.tray"
         },
         {
-          "id": "aashutosh31.telemetry"
+          "id": "omarchy.agents"
         },
         {
-          "id": "omarchy.agents"
+          "id": "aashutosh31.cpu"
         },
         {
           "id": "omarchy.tailscale"

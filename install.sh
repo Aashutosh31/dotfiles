@@ -167,11 +167,6 @@ backup_item "$HOME/.local/bin/cyberdeck"
 cp -f "$REPO/scripts/cyberdeck" "$HOME/.local/bin/cyberdeck"
 chmod +x "$HOME/.local/bin/cyberdeck"
 
-# Switch between the telemetry and the existing CPU bar widget.
-backup_item "$HOME/.local/bin/telemetry-switch"
-cp -f "$REPO/scripts/telemetry-switch" "$HOME/.local/bin/telemetry-switch"
-chmod +x "$HOME/.local/bin/telemetry-switch"
-
 backup_item "$HOME/.zshrc"
 backup_item "$HOME/.XCompose"
 
