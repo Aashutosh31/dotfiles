@@ -136,7 +136,7 @@ BarWidget {
         spacing: Style.space(6)
 
         Button { iconText: "󰒮"; foreground: root.bar.foreground; enabled: root.activePlayer && root.activePlayer.canGoPrevious; onClicked: root.activePlayer.previous() }
-        Button { iconText: "󰐊"; foreground: root.bar.foreground; iconSize: Style.font.iconLarge; onClicked: root.playPause() }
+        Button { iconText: root.activePlayer && root.activePlayer.isPlaying ? "󰏤" : "󰐊"; foreground: root.bar.foreground; iconSize: Style.font.iconLarge; onClicked: root.playPause() }
         Button { iconText: "󰒭"; foreground: root.bar.foreground; enabled: root.activePlayer && root.activePlayer.canGoNext; onClicked: root.activePlayer.next() }
         Button { iconText: "󰒝"; foreground: root.bar.foreground; enabled: root.activePlayer && root.activePlayer.shuffleSupported; onClicked: root.activePlayer.shuffle = !root.activePlayer.shuffle }
       }
