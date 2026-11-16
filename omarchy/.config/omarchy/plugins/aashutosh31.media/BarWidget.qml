@@ -5,8 +5,7 @@ import qs.Commons
 import qs.Commons as Commons
 import qs.Ui
 
-// Personal media deck. The MPRIS service is standard, but the presentation,
-// size and interaction belong to this setup: one click opens the card.
+// Media Deck — a now-playing pill for the Omarchy bar, backed by MPRIS.
 BarWidget {
   id: root
   moduleName: "aashutosh31.media"
@@ -190,6 +189,7 @@ BarWidget {
         ? (root.activePlayer.trackTitle || "Now playing")
           + (root.activePlayer.trackArtist ? "  ·  " + root.activePlayer.trackArtist : "")
         : ""
+      textFormat: Text.PlainText
       color: root.barForeground
       font.family: root.fontFamily
       font.pixelSize: Style.font.bodySmall
@@ -272,9 +272,9 @@ BarWidget {
           spacing: Style.space(4)
           anchors.verticalCenter: parent.verticalCenter
 
-          Text { text: root.activePlayer ? (root.activePlayer.trackTitle || "Nothing playing") : "Nothing playing"; color: root.foreground; font.family: root.fontFamily; font.pixelSize: Style.font.subtitle; font.bold: true; elide: Text.ElideRight; width: parent.width }
-          Text { text: root.activePlayer ? (root.activePlayer.trackArtist || "") : ""; color: Qt.darker(root.foreground, 1.3); font.family: root.fontFamily; font.pixelSize: Style.font.body; elide: Text.ElideRight; width: parent.width; visible: text !== "" }
-          Text { text: root.activePlayer ? (root.activePlayer.trackAlbum || "") : ""; color: Qt.darker(root.foreground, 1.6); font.family: root.fontFamily; font.pixelSize: Style.font.caption; elide: Text.ElideRight; width: parent.width; visible: text !== "" }
+          Text { text: root.activePlayer ? (root.activePlayer.trackTitle || "Nothing playing") : "Nothing playing"; textFormat: Text.PlainText; color: root.foreground; font.family: root.fontFamily; font.pixelSize: Style.font.subtitle; font.bold: true; elide: Text.ElideRight; width: parent.width }
+          Text { text: root.activePlayer ? (root.activePlayer.trackArtist || "") : ""; textFormat: Text.PlainText; color: Qt.darker(root.foreground, 1.3); font.family: root.fontFamily; font.pixelSize: Style.font.body; elide: Text.ElideRight; width: parent.width; visible: text !== "" }
+          Text { text: root.activePlayer ? (root.activePlayer.trackAlbum || "") : ""; textFormat: Text.PlainText; color: Qt.darker(root.foreground, 1.6); font.family: root.fontFamily; font.pixelSize: Style.font.caption; elide: Text.ElideRight; width: parent.width; visible: text !== "" }
         }
       }
 
