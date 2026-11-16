@@ -139,7 +139,7 @@ o.bind("SUPER + SHIFT + ALT + X",
 
 o.bind("SUPER + H",
   nil,
-  "voxtype record toggle")
+  "omarchy-dictation toggle")
 
 -- Snapshot every config this repo owns, plus a bootable root snapshot.
 -- Runs in a terminal on purpose: snapper needs a TTY for the sudo prompt.

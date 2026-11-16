@@ -8,6 +8,10 @@ BarIndicator {
   property string state: "idle"
   property string icon: ""
 
+  // Resolve the helper next to this file so the indicator works even if the
+  // plugin directory is moved.
+  readonly property string statusScript: Qt.resolvedUrl("dictation-status.sh").toString().replace(/^file:\/\//, "")
+
   active: state === "recording"
   activeText: icon
   inactiveText: "󰍬"
@@ -24,7 +28,7 @@ BarIndicator {
   }
 
   Process {
-    command: ["bash", "-c", "omarchy-voxtype-status"]
+    command: ["bash", root.statusScript]
     running: true
     stdout: SplitParser {
       onRead: function(data) { root.update(data) }
@@ -33,6 +37,6 @@ BarIndicator {
 
   onPressed: function() {
     if (!root.bar) return
-    root.bar.run("omarchy-voxtype-config")
+    root.bar.run("omarchy-shell superwhisper open")
   }
 }

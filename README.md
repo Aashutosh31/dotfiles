@@ -128,7 +128,7 @@
 ```
 alacritty · atuin · btop · fastfetch · fish · foot · ghostty · hyprland
 kitty · lazydocker · lazygit · mise · mpv · neovim · omarchy · starship
-tmux · voxtype · VS Code · yazi · zellij · zsh
+tmux · VS Code · yazi · zellij · zsh
 ```
 
 ## 🧩 Personal Omarchy Plugins
@@ -175,6 +175,18 @@ omarchy/.config/omarchy/extensions/omarchy-menu.jsonc
 
 They are personal convenience actions layered on top of Omarchy, while the
 underlying Omarchy files remain untouched.
+
+### Dictation
+
+Omarchy's default dictation backend is Superwhisper (`superwhisper-bin`), and
+this setup uses it. The older Voxtype installation was removed: its user
+service, package entry, config directory, and `SUPER+H` bind are gone, so only
+one recorder starts at login.
+
+`SUPER+H` is kept as a personal dictation key and now routes through
+`omarchy-dictation toggle` instead of calling Voxtype directly. The bar's
+Dictation indicator reads Superwhisper's phase through
+`indicators/dictation-status.sh` and opens the Superwhisper panel on click.
 
 ### `aashutosh31.media` — personal Media Deck
 
@@ -394,7 +406,7 @@ The last line of `.zshrc` sources `~/.local/share/../bin/env` (= `~/.local/bin/e
 2. **Installs missing official packages** — ensures everything in [`packages/pacman.txt`](packages/pacman.txt) is present, using Omarchy's `omarchy-pkg-add` helper when available (falling back to `pacman -S --needed`). This **does not perform a full system upgrade** — on Omarchy, system upgrades belong to `omarchy update`, which the installer never bypasses.
 3. **Installs AUR packages** — if `yay` is present, installs everything in [`packages/aur.txt`](packages/aur.txt) non-interactively (`--answerclean None --answerdiff None`). Skips gracefully if `yay` isn't found.
 4. **Creates a timestamped backup** at `~/.dotfiles-backup/<YYYY><MM><DD>-<HHMMSS>/` — see [Backups & Rollback](#-backups--rollback) below.
-5. **Backs up and replaces each config** — for every tool in the list (`alacritty`, `atuin`, `btop`, `fastfetch`, `fish`, `foot`, `ghostty`, `hypr`, `kitty`, `lazydocker`, `lazygit`, `mise`, `mpv`, `nvim`, `omarchy`, `tmux`, `voxtype`, `yazi`, `zellij`):
+5. **Backs up and replaces each config** — for every tool in the list (`alacritty`, `atuin`, `btop`, `fastfetch`, `fish`, `foot`, `ghostty`, `hypr`, `kitty`, `lazydocker`, `lazygit`, `mise`, `mpv`, `nvim`, `omarchy`, `tmux`, `yazi`, `zellij`):
    - if a matching config exists in this repo, each file in your current `~/.config/<tool>` is backed up individually, then replaced in-place (safe to run while a desktop session is live — the directory is never deleted).
 6. **Installs starship** at `~/.config/starship.toml`, the **wallhaven theme background** into `~/.config/omarchy/themes/wallhaven/`, and the custom **About screen launcher** to `~/.local/bin/omarchy-launch-about`.
 7. **Backs up and replaces dotfiles** — `~/.zshrc` and `~/.XCompose` get the same backup-then-overwrite treatment.
@@ -459,7 +471,6 @@ In short: `bootstrap.sh` gets a bare Arch install to the point where `install.sh
 ├── scripts/       # checkpoint, omarchy-launch-about, lib/shell-env.sh
 ├── starship/
 ├── tmux/
-├── voxtype/
 ├── wallpapers/
 ├── yazi/
 └── zellij/

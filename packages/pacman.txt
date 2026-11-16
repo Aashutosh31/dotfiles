@@ -172,7 +172,6 @@ uwsm
 virt-manager
 virt-viewer
 visual-studio-code-bin
-voxtype-bin
 vpl-gpu-rt
 vulkan-intel
 wget

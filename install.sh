@@ -120,7 +120,7 @@ install_cfg() {
 
 for cfg in \
 alacritty atuin btop fastfetch fish foot ghostty hypr kitty lazydocker \
-lazygit mise mpv nvim omarchy tmux voxtype yazi zellij
+lazygit mise mpv nvim omarchy tmux yazi zellij
 do
     install_cfg "$cfg"
 done
