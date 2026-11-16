@@ -197,11 +197,15 @@ personal `Dictation` indicator, which called the removed
 
 The personal Media Deck is placed in the centered bar group beside the clock.
 When Spotify, YouTube Music, or another MPRIS-compatible player is
-playing, it shows a larger track pill. A single left-click opens its popup;
-the popup includes artwork, title, artist, album, previous, play/pause, next,
-shuffle, available-player switching, elapsed/total time, and a clickable seek
-bar. It uses Quickshell's standard MPRIS interface but has a personal
-presentation and interaction design.
+playing, it shows a compact track pill with cover art, title and artist. The
+pill tooltip includes the source player; left-click opens the popup, right-click
+toggles play/pause, middle-click skips forward, and the scroll wheel adjusts
+player volume when supported. The popup includes artwork, title, artist,
+album, previous, play/pause, next, shuffle, repeat controls, available-player
+switching, elapsed/total time, a clickable seek bar, and a player-volume slider
+with mute. Unsupported MPRIS capabilities are hidden or disabled. It uses
+Quickshell's standard MPRIS interface but has a personal presentation and
+interaction design.
 
 Chrome/Chromium YouTube Music and native MPRIS players expose the full
 timeline, so their progress and seeking work. Firefox's current YouTube Music

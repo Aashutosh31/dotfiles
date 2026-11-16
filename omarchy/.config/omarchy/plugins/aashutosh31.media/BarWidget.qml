@@ -14,17 +14,30 @@ BarWidget {
   readonly property var players: Mpris.players ? Mpris.players.values : []
   readonly property var activePlayer: choosePlayer(players)
   readonly property bool hasMedia: !!activePlayer && (!!activePlayer.trackTitle || !!activePlayer.trackArtist)
+  readonly property color foreground: bar ? bar.foreground : Commons.Color.foreground
+  readonly property color barForeground: bar ? bar.barForeground : Commons.Color.foreground
+  readonly property string fontFamily: bar ? bar.fontFamily : Style.font.family
   property bool popupOpen: false
   property real liveSeconds: activePlayer ? seconds(activePlayer.position) : 0
   property real anchorSeconds: 0
   property real anchorMillis: 0
   property real lastObservedSeconds: -1
   property string timelineTrack: ""
-  property bool seeking: false
   property double seekGraceUntil: 0
+  property real rememberedVolume: 0.5
+
+  readonly property bool opened: popupOpen
+
+  function open() {
+    popupOpen = true
+  }
 
   function close() {
     popupOpen = false
+  }
+
+  function toggle() {
+    popupOpen = !popupOpen
   }
 
   function choosePlayer(list) {
@@ -50,6 +63,26 @@ BarWidget {
     if (root.activePlayer.isPlaying && root.activePlayer.canPause) root.activePlayer.pause()
     else if (!root.activePlayer.isPlaying && root.activePlayer.canPlay) root.activePlayer.play()
     else if (root.activePlayer.canTogglePlaying) root.activePlayer.togglePlaying()
+  }
+
+  function toggleMute() {
+    if (!activePlayer || !activePlayer.volumeSupported) return
+    if (activePlayer.volume > 0) {
+      rememberedVolume = activePlayer.volume
+      activePlayer.volume = 0
+    } else {
+      activePlayer.volume = Math.max(0.05, rememberedVolume)
+    }
+  }
+
+  function cycleRepeat() {
+    if (!activePlayer || !activePlayer.loopSupported) return
+    if (activePlayer.loopState === MprisLoopState.None)
+      activePlayer.loopState = MprisLoopState.Playlist
+    else if (activePlayer.loopState === MprisLoopState.Playlist)
+      activePlayer.loopState = MprisLoopState.Track
+    else
+      activePlayer.loopState = MprisLoopState.None
   }
 
   function seconds(value) {
@@ -117,35 +150,77 @@ BarWidget {
 
   Row {
     anchors.centerIn: parent
-    spacing: Style.space(8)
+    spacing: Style.space(7)
+
+    BorderSurface {
+      width: Style.space(26)
+      height: Style.space(26)
+      radius: Style.spacing.labelGap
+      anchors.verticalCenter: parent.verticalCenter
+      color: Style.normalFillFor(root.barForeground, Commons.Color.accent)
+
+      SizedImage {
+        anchors.fill: parent
+        anchors.margins: Style.space(1)
+        crop: true
+        url: root.activePlayer && root.activePlayer.trackArtUrl ? root.activePlayer.trackArtUrl : ""
+        visible: url !== ""
+      }
+
+      Text {
+        anchors.centerIn: parent
+        visible: !root.activePlayer || !root.activePlayer.trackArtUrl
+        text: "󰝚"
+        color: root.barForeground
+        font.family: root.fontFamily
+        font.pixelSize: Style.font.body
+      }
+    }
 
     Text {
       text: root.activePlayer && root.activePlayer.isPlaying ? "󰏤" : "󰐊"
-      color: root.bar.barForeground
-      font.family: root.bar.fontFamily
+      color: root.activePlayer && root.activePlayer.isPlaying ? Commons.Color.accent : root.barForeground
+      font.family: root.fontFamily
       font.pixelSize: Style.font.body
       anchors.verticalCenter: parent.verticalCenter
     }
 
     Text {
-      text: root.activePlayer ? (root.activePlayer.trackTitle || "Now playing") : ""
-      color: root.bar.barForeground
-      font.family: root.bar.fontFamily
-      font.pixelSize: Style.font.body
+      text: root.activePlayer
+        ? (root.activePlayer.trackTitle || "Now playing")
+          + (root.activePlayer.trackArtist ? "  ·  " + root.activePlayer.trackArtist : "")
+        : ""
+      color: root.barForeground
+      font.family: root.fontFamily
+      font.pixelSize: Style.font.bodySmall
       elide: Text.ElideRight
-      width: Style.space(170)
+      width: Style.space(155)
       anchors.verticalCenter: parent.verticalCenter
     }
   }
 
   MouseArea {
     anchors.fill: parent
+    hoverEnabled: true
+    cursorShape: root.activePlayer ? Qt.PointingHandCursor : Qt.ArrowCursor
     acceptedButtons: Qt.LeftButton | Qt.MiddleButton | Qt.RightButton
+    onEntered: if (root.bar && root.activePlayer) {
+      var title = root.activePlayer.trackTitle || "Now playing"
+      var artist = root.activePlayer.trackArtist
+      root.bar.showTooltip(root, title + (artist ? " — " + artist : "") + "  ·  " + root.playerLabel(root.activePlayer))
+    }
+    onExited: if (root.bar) root.bar.hideTooltip(root)
     onClicked: function(mouse) {
       if (!root.activePlayer) return
       if (mouse.button === Qt.MiddleButton && root.activePlayer.canGoNext) root.activePlayer.next()
       else if (mouse.button === Qt.RightButton) root.playPause()
       else root.popupOpen = !root.popupOpen
+    }
+    onWheel: function(wheel) {
+      if (!root.activePlayer || !root.activePlayer.volumeSupported) return
+      var step = wheel.angleDelta.y > 0 ? 0.05 : -0.05
+      root.activePlayer.volume = Math.max(0, Math.min(1, root.activePlayer.volume + step))
+      if (root.activePlayer.volume > 0) root.rememberedVolume = root.activePlayer.volume
     }
   }
 
@@ -171,8 +246,8 @@ BarWidget {
           width: Style.space(78)
           height: Style.space(78)
           radius: Style.spacing.labelGap
-          color: Style.normalFillFor(root.bar.foreground, Commons.Color.accent)
-          borderSpec: Border.controlSpec("normal", root.bar.foreground, Commons.Color.accent)
+          color: Style.normalFillFor(root.foreground, Commons.Color.accent)
+          borderSpec: Border.controlSpec("normal", root.foreground, Commons.Color.accent)
 
           SizedImage {
             anchors.fill: parent
@@ -186,8 +261,8 @@ BarWidget {
             anchors.centerIn: parent
             visible: !root.activePlayer || !root.activePlayer.trackArtUrl
             text: "󰝚"
-            color: root.bar.foreground
-            font.family: root.bar.fontFamily
+            color: root.foreground
+            font.family: root.fontFamily
             font.pixelSize: Style.font.displayLarge
           }
         }
@@ -197,9 +272,9 @@ BarWidget {
           spacing: Style.space(4)
           anchors.verticalCenter: parent.verticalCenter
 
-          Text { text: root.activePlayer ? (root.activePlayer.trackTitle || "Nothing playing") : "Nothing playing"; color: root.bar.foreground; font.family: root.bar.fontFamily; font.pixelSize: Style.font.subtitle; font.bold: true; elide: Text.ElideRight; width: parent.width }
-          Text { text: root.activePlayer ? (root.activePlayer.trackArtist || "") : ""; color: Qt.darker(root.bar.foreground, 1.3); font.family: root.bar.fontFamily; font.pixelSize: Style.font.body; elide: Text.ElideRight; width: parent.width; visible: text !== "" }
-          Text { text: root.activePlayer ? (root.activePlayer.trackAlbum || "") : ""; color: Qt.darker(root.bar.foreground, 1.6); font.family: root.bar.fontFamily; font.pixelSize: Style.font.caption; elide: Text.ElideRight; width: parent.width; visible: text !== "" }
+          Text { text: root.activePlayer ? (root.activePlayer.trackTitle || "Nothing playing") : "Nothing playing"; color: root.foreground; font.family: root.fontFamily; font.pixelSize: Style.font.subtitle; font.bold: true; elide: Text.ElideRight; width: parent.width }
+          Text { text: root.activePlayer ? (root.activePlayer.trackArtist || "") : ""; color: Qt.darker(root.foreground, 1.3); font.family: root.fontFamily; font.pixelSize: Style.font.body; elide: Text.ElideRight; width: parent.width; visible: text !== "" }
+          Text { text: root.activePlayer ? (root.activePlayer.trackAlbum || "") : ""; color: Qt.darker(root.foreground, 1.6); font.family: root.fontFamily; font.pixelSize: Style.font.caption; elide: Text.ElideRight; width: parent.width; visible: text !== "" }
         }
       }
 
@@ -207,10 +282,10 @@ BarWidget {
         anchors.horizontalCenter: parent.horizontalCenter
         spacing: Style.space(6)
 
-        Button { iconText: "󰒮"; foreground: root.bar.foreground; enabled: root.activePlayer && root.activePlayer.canGoPrevious; onClicked: root.activePlayer.previous() }
-        Button { iconText: root.activePlayer && root.activePlayer.isPlaying ? "󰏤" : "󰐊"; foreground: root.bar.foreground; iconSize: Style.font.iconLarge; onClicked: root.playPause() }
-        Button { iconText: "󰒭"; foreground: root.bar.foreground; enabled: root.activePlayer && root.activePlayer.canGoNext; onClicked: root.activePlayer.next() }
-        Button { iconText: "󰒝"; foreground: root.bar.foreground; enabled: root.activePlayer && root.activePlayer.shuffleSupported; onClicked: root.activePlayer.shuffle = !root.activePlayer.shuffle }
+        Button { iconText: "󰒮"; foreground: root.foreground; enabled: root.activePlayer && root.activePlayer.canGoPrevious; onClicked: root.activePlayer.previous() }
+        Button { iconText: root.activePlayer && root.activePlayer.isPlaying ? "󰏤" : "󰐊"; foreground: root.foreground; iconSize: Style.font.iconLarge; onClicked: root.playPause() }
+        Button { iconText: "󰒭"; foreground: root.foreground; enabled: root.activePlayer && root.activePlayer.canGoNext; onClicked: root.activePlayer.next() }
+        Button { iconText: "󰒝"; foreground: root.foreground; enabled: root.activePlayer && root.activePlayer.shuffleSupported; onClicked: root.activePlayer.shuffle = !root.activePlayer.shuffle }
       }
 
       Column {
@@ -226,28 +301,23 @@ BarWidget {
           step: 0.001
           value: root.progress
           enabled: root.activePlayer && root.activePlayer.canSeek && root.activePlayer.lengthSupported
-          trackColor: Qt.rgba(root.bar.foreground.r, root.bar.foreground.g, root.bar.foreground.b, 0.18)
+          trackColor: Qt.rgba(root.foreground.r, root.foreground.g, root.foreground.b, 0.18)
           fillColor: Commons.Color.accent
-          knobColor: root.bar.foreground
-          onMoved: function(value) {
-            root.seeking = true
-            root.seekAt(value)
-          }
+          knobColor: root.foreground
           onReleased: function(value) {
             root.seekAt(value)
-            root.seeking = false
           }
         }
 
         Row {
           width: parent.width
-          Text { id: elapsed; text: root.activePlayer ? root.timeLabel(root.liveSeconds) : "0:00"; color: Qt.darker(root.bar.foreground, 1.4); font.family: root.bar.fontFamily; font.pixelSize: Style.font.caption }
+          Text { id: elapsed; text: root.activePlayer ? root.timeLabel(root.liveSeconds) : "0:00"; color: Qt.darker(root.foreground, 1.4); font.family: root.fontFamily; font.pixelSize: Style.font.caption }
           Item { width: parent.width - elapsed.width - total.width; height: 1 }
-          Text { id: total; text: root.activePlayer ? root.timeLabel(root.activePlayer.length) : "0:00"; color: Qt.darker(root.bar.foreground, 1.4); font.family: root.bar.fontFamily; font.pixelSize: Style.font.caption }
+          Text { id: total; text: root.activePlayer ? root.timeLabel(root.activePlayer.length) : "0:00"; color: Qt.darker(root.foreground, 1.4); font.family: root.fontFamily; font.pixelSize: Style.font.caption }
         }
       }
 
-      PanelSeparator { foreground: root.bar.foreground; visible: root.players.length > 1 }
+      PanelSeparator { foreground: root.foreground; visible: root.players.length > 1 }
 
       Repeater {
         model: root.players
@@ -255,13 +325,64 @@ BarWidget {
           required property var modelData
           width: parent.width
           text: root.playerLabel(modelData) + (modelData === root.activePlayer ? "  • ACTIVE" : "")
-          foreground: root.bar.foreground
+          foreground: root.foreground
           visible: modelData.trackTitle || modelData.trackArtist
           onClicked: { if (modelData.canPlay) modelData.play(); root.popupOpen = false }
         }
       }
 
-      Text { text: "Click the media pill to close"; color: Qt.darker(root.bar.foreground, 1.6); font.family: root.bar.fontFamily; font.pixelSize: Style.font.caption; anchors.horizontalCenter: parent.horizontalCenter }
+      Row {
+        width: parent.width
+        spacing: Style.space(6)
+        visible: root.activePlayer && root.activePlayer.volumeSupported
+
+        Button {
+          iconText: root.activePlayer && root.activePlayer.volume === 0 ? "󰖁" : "󰕾"
+          foreground: root.foreground
+          tooltipText: root.activePlayer && root.activePlayer.volume === 0 ? "Unmute player" : "Mute player"
+          onClicked: root.toggleMute()
+        }
+
+        PanelSlider {
+          width: parent.width - Style.space(62)
+          minimum: 0
+          maximum: 1
+          step: 0.01
+          value: root.activePlayer ? root.activePlayer.volume : 0
+          enabled: root.activePlayer && root.activePlayer.volumeSupported
+          trackColor: Qt.rgba(root.foreground.r, root.foreground.g, root.foreground.b, 0.18)
+          fillColor: Commons.Color.accent
+          knobColor: root.foreground
+          onReleased: function(value) {
+            if (root.activePlayer && root.activePlayer.volumeSupported) {
+              root.activePlayer.volume = value
+              if (value > 0) root.rememberedVolume = value
+            }
+          }
+        }
+
+        Text {
+          width: Style.space(30)
+          text: root.activePlayer ? Math.round(root.activePlayer.volume * 100) + "%" : ""
+          color: Qt.darker(root.foreground, 1.4)
+          font.family: root.fontFamily
+          font.pixelSize: Style.font.caption
+          anchors.verticalCenter: parent.verticalCenter
+          horizontalAlignment: Text.AlignRight
+        }
+      }
+
+      Button {
+        visible: root.activePlayer && root.activePlayer.loopSupported
+        iconText: root.activePlayer && root.activePlayer.loopState === MprisLoopState.Track ? "󰑘" : "󰑖"
+        active: root.activePlayer && root.activePlayer.loopState !== MprisLoopState.None
+        foreground: root.foreground
+        tooltipText: !root.activePlayer || root.activePlayer.loopState === MprisLoopState.None
+          ? "Repeat off" : (root.activePlayer.loopState === MprisLoopState.Track ? "Repeat track" : "Repeat playlist")
+        onClicked: root.cycleRepeat()
+      }
+
+      Text { text: "Click the media pill to close"; color: Qt.darker(root.foreground, 1.6); font.family: root.fontFamily; font.pixelSize: Style.font.caption; anchors.horizontalCenter: parent.horizontalCenter }
     }
   }
 }
