@@ -199,6 +199,18 @@ Source:
 omarchy/.config/omarchy/plugins/aashutosh31.media/
 ```
 
+Published as a standalone plugin, MIT licensed:
+
+```text
+https://github.com/Aashutosh31/omarchy-media-deck
+```
+
+Install it on any Omarchy machine with:
+
+```bash
+omarchy plugin add https://github.com/Aashutosh31/omarchy-media-deck.git --enable
+```
+
 ---
 
 ## 📥 Installation
