@@ -184,9 +184,14 @@ service, package entry, config directory, and `SUPER+H` bind are gone, so only
 one recorder starts at login.
 
 `SUPER+H` is kept as a personal dictation key and now routes through
-`omarchy-dictation toggle` instead of calling Voxtype directly. The bar's
-Dictation indicator reads Superwhisper's phase through
-`indicators/dictation-status.sh` and opens the Superwhisper panel on click.
+`omarchy-dictation toggle` instead of calling Voxtype directly.
+
+The bar shows Superwhisper's own panel widget (`superwhisper.panel`) in the
+right section. Its icon is the live dictation state — a red dot appears while
+recording — and left-clicking opens the Superwhisper panel. It was moved out of
+the tray drawer, where it was hidden until the drawer was opened. The older
+personal `Dictation` indicator, which called the removed
+`omarchy-voxtype-status`, has been retired.
 
 ### `aashutosh31.media` — personal Media Deck
 
