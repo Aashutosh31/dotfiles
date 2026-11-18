@@ -197,10 +197,10 @@ personal `Dictation` indicator, which called the removed
 
 The personal Media Deck is placed in the centered bar group beside the clock.
 When Spotify, YouTube Music, or another MPRIS-compatible player is
-playing, it shows a compact track pill with cover art, title and artist. The
+playing, it shows a compact track pill with title and artist. The
 pill tooltip includes the source player; left-click opens the popup, right-click
 toggles play/pause, middle-click skips forward, and the scroll wheel adjusts
-player volume when supported. The popup includes artwork, title, artist,
+player volume when supported. The popup includes title, artist,
 album, previous, play/pause, next, shuffle, repeat controls, available-player
 switching, elapsed/total time, a clickable seek bar, and a player-volume slider
 with mute. Unsupported MPRIS capabilities are hidden or disabled. It uses
@@ -208,11 +208,10 @@ Quickshell's standard MPRIS interface but has a personal presentation and
 interaction design.
 
 MPRIS title, artist, and album metadata is rendered as plain text, not HTML, and
-displayed fields are length-capped. Cover art is loaded only from local
-`file:///` files with recognized raster extensions; remote URLs, embedded
-`data:` images, SVG, and other schemes are ignored so MPRIS metadata cannot
-make the shell fetch network resources or parse vector artwork. Players that
-only supply those artwork formats show the music-note fallback instead.
+displayed fields are length-capped. The widget does not load cover art: even
+local MPRIS paths can refer to blocking special files, and checking before
+opening would leave a race. It uses a music-note placeholder instead, so no
+player-controlled URL or filesystem path reaches Qt Quick's image loader.
 
 Chrome/Chromium YouTube Music and native MPRIS players expose the full
 timeline, so their progress and seeking work. Firefox's current YouTube Music

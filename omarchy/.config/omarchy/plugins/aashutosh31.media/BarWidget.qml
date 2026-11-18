@@ -13,7 +13,6 @@ BarWidget {
   readonly property var players: Mpris.players ? Mpris.players.values : []
   readonly property var activePlayer: choosePlayer(players)
   readonly property bool hasMedia: !!activePlayer && (!!activePlayer.trackTitle || !!activePlayer.trackArtist)
-  readonly property string artworkUrl: safeArtworkUrl(activePlayer ? activePlayer.trackArtUrl : "")
   readonly property color foreground: bar ? bar.foreground : Commons.Color.foreground
   readonly property color barForeground: bar ? bar.barForeground : Commons.Color.foreground
   readonly property string fontFamily: bar ? bar.fontFamily : Style.font.family
@@ -62,17 +61,6 @@ BarWidget {
     var text = String(value || "")
     if (text.length <= maxLength) return text
     return text.slice(0, maxLength - 1) + "…"
-  }
-
-  function safeArtworkUrl(value) {
-    var url = String(value || "")
-    if (url.length > 4096) return ""
-
-    // MPRIS artwork is untrusted input. Only load local files with raster
-    // extensions. Never pass remote, data, SVG, or other schemes to Qt Quick.
-    if (/^file:\/\/\/(?!\/).+\.(?:png|jpe?g|gif|webp|bmp|avif)$/i.test(url))
-      return url
-    return ""
   }
 
   function playPause() {
@@ -177,17 +165,8 @@ BarWidget {
       anchors.verticalCenter: parent.verticalCenter
       color: Style.normalFillFor(root.barForeground, Commons.Color.accent)
 
-      SizedImage {
-        anchors.fill: parent
-        anchors.margins: Style.space(1)
-        crop: true
-        url: root.artworkUrl
-        visible: url !== ""
-      }
-
       Text {
         anchors.centerIn: parent
-        visible: root.artworkUrl === ""
         text: "󰝚"
         color: root.barForeground
         font.family: root.fontFamily
@@ -268,17 +247,8 @@ BarWidget {
           color: Style.normalFillFor(root.foreground, Commons.Color.accent)
           borderSpec: Border.controlSpec("normal", root.foreground, Commons.Color.accent)
 
-          SizedImage {
-            anchors.fill: parent
-            anchors.margins: Style.space(2)
-            crop: true
-            url: root.artworkUrl
-            visible: url !== ""
-          }
-
           Text {
             anchors.centerIn: parent
-            visible: root.artworkUrl === ""
             text: "󰝚"
             color: root.foreground
             font.family: root.fontFamily
