@@ -55,18 +55,22 @@ BarWidget {
   }
 
   function playerLabel(player) {
-    return player ? (player.identity || player.desktopEntry || "Player") : "Player"
+    return player ? displayMetadata(player.identity || player.desktopEntry || "Player", 80) : "Player"
+  }
+
+  function displayMetadata(value, maxLength) {
+    var text = String(value || "")
+    if (text.length <= maxLength) return text
+    return text.slice(0, maxLength - 1) + "…"
   }
 
   function safeArtworkUrl(value) {
     var url = String(value || "")
-    if (url.length > 8 * 1024 * 1024) return ""
+    if (url.length > 4096) return ""
 
-    // MPRIS artwork is untrusted input. Only load local files and bounded,
-    // embedded raster images; never let player metadata make the shell fetch
-    // an arbitrary network URL.
-    if (/^file:\/\/\/(?!\/)/i.test(url)) return url
-    if (/^data:image\/(?:png|jpe?g|gif|webp|bmp|avif);base64,[A-Za-z0-9+/]+={0,2}$/i.test(url))
+    // MPRIS artwork is untrusted input. Only load local files with raster
+    // extensions. Never pass remote, data, SVG, or other schemes to Qt Quick.
+    if (/^file:\/\/\/(?!\/).+\.(?:png|jpe?g|gif|webp|bmp|avif)$/i.test(url))
       return url
     return ""
   }
@@ -138,7 +142,8 @@ BarWidget {
     if (now < seekGraceUntil) return
     activePlayer.positionChanged()
     var reported = seconds(activePlayer.position)
-    var track = activePlayer.trackTitle + "\u0000" + activePlayer.trackArtist
+    var track = displayMetadata(activePlayer.trackTitle, 256)
+      + "\u0000" + displayMetadata(activePlayer.trackArtist, 256)
     var newTrack = track !== timelineTrack
     var jumped = lastObservedSeconds >= 0 && Math.abs(reported - lastObservedSeconds) > 1.5
 
@@ -200,8 +205,8 @@ BarWidget {
 
     Text {
       text: root.activePlayer
-        ? (root.activePlayer.trackTitle || "Now playing")
-          + (root.activePlayer.trackArtist ? "  ·  " + root.activePlayer.trackArtist : "")
+        ? displayMetadata(root.activePlayer.trackTitle || "Now playing", 256)
+          + (root.activePlayer.trackArtist ? "  ·  " + displayMetadata(root.activePlayer.trackArtist, 256) : "")
         : ""
       textFormat: Text.PlainText
       color: root.barForeground
@@ -219,8 +224,8 @@ BarWidget {
     cursorShape: root.activePlayer ? Qt.PointingHandCursor : Qt.ArrowCursor
     acceptedButtons: Qt.LeftButton | Qt.MiddleButton | Qt.RightButton
     onEntered: if (root.bar && root.activePlayer) {
-      var title = root.activePlayer.trackTitle || "Now playing"
-      var artist = root.activePlayer.trackArtist
+      var title = root.displayMetadata(root.activePlayer.trackTitle || "Now playing", 256)
+      var artist = root.displayMetadata(root.activePlayer.trackArtist, 256)
       root.bar.showTooltip(root, title + (artist ? " — " + artist : "") + "  ·  " + root.playerLabel(root.activePlayer))
     }
     onExited: if (root.bar) root.bar.hideTooltip(root)
@@ -286,9 +291,9 @@ BarWidget {
           spacing: Style.space(4)
           anchors.verticalCenter: parent.verticalCenter
 
-          Text { text: root.activePlayer ? (root.activePlayer.trackTitle || "Nothing playing") : "Nothing playing"; textFormat: Text.PlainText; color: root.foreground; font.family: root.fontFamily; font.pixelSize: Style.font.subtitle; font.bold: true; elide: Text.ElideRight; width: parent.width }
-          Text { text: root.activePlayer ? (root.activePlayer.trackArtist || "") : ""; textFormat: Text.PlainText; color: Qt.darker(root.foreground, 1.3); font.family: root.fontFamily; font.pixelSize: Style.font.body; elide: Text.ElideRight; width: parent.width; visible: text !== "" }
-          Text { text: root.activePlayer ? (root.activePlayer.trackAlbum || "") : ""; textFormat: Text.PlainText; color: Qt.darker(root.foreground, 1.6); font.family: root.fontFamily; font.pixelSize: Style.font.caption; elide: Text.ElideRight; width: parent.width; visible: text !== "" }
+          Text { text: root.activePlayer ? root.displayMetadata(root.activePlayer.trackTitle || "Nothing playing", 256) : "Nothing playing"; textFormat: Text.PlainText; color: root.foreground; font.family: root.fontFamily; font.pixelSize: Style.font.subtitle; font.bold: true; elide: Text.ElideRight; width: parent.width }
+          Text { text: root.activePlayer ? root.displayMetadata(root.activePlayer.trackArtist, 256) : ""; textFormat: Text.PlainText; color: Qt.darker(root.foreground, 1.3); font.family: root.fontFamily; font.pixelSize: Style.font.body; elide: Text.ElideRight; width: parent.width; visible: text !== "" }
+          Text { text: root.activePlayer ? root.displayMetadata(root.activePlayer.trackAlbum, 256) : ""; textFormat: Text.PlainText; color: Qt.darker(root.foreground, 1.6); font.family: Style.font.caption; elide: Text.ElideRight; width: parent.width; visible: text !== "" }
         }
       }
 

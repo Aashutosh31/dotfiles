@@ -207,11 +207,12 @@ with mute. Unsupported MPRIS capabilities are hidden or disabled. It uses
 Quickshell's standard MPRIS interface but has a personal presentation and
 interaction design.
 
-MPRIS title, artist, and album metadata is rendered as plain text, not HTML.
-Cover art is loaded only from local `file:///` URLs or bounded embedded raster
-data URLs; remote HTTP(S) artwork is ignored to prevent metadata-controlled
-network requests from the shell. Players that only supply remote artwork show
-the music-note fallback instead.
+MPRIS title, artist, and album metadata is rendered as plain text, not HTML, and
+displayed fields are length-capped. Cover art is loaded only from local
+`file:///` files with recognized raster extensions; remote URLs, embedded
+`data:` images, SVG, and other schemes are ignored so MPRIS metadata cannot
+make the shell fetch network resources or parse vector artwork. Players that
+only supply those artwork formats show the music-note fallback instead.
 
 Chrome/Chromium YouTube Music and native MPRIS players expose the full
 timeline, so their progress and seeking work. Firefox's current YouTube Music
