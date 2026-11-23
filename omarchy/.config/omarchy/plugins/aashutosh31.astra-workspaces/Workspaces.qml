@@ -52,19 +52,13 @@ BarWidget {
 
         Rectangle {
           anchors.centerIn: parent
-          width: focused ? 30 : 28
-          height: focused ? 30 : 28
-          radius: 10
+          width: 22
+          height: 22
+          radius: width / 2
           visible: tab.focused
-          gradient: Gradient {
-            orientation: Gradient.Vertical
-            GradientStop { position: 0; color: "#c9a7dc" }
-            GradientStop { position: 1; color: "#9c7db8" }
-          }
+          color: "#a485bf"
           border.width: 1
-          border.color: "#d9bfeb"
-          Behavior on width { NumberAnimation { duration: Style.duration(150); easing.type: Easing.OutCubic } }
-          Behavior on height { NumberAnimation { duration: Style.duration(150); easing.type: Easing.OutCubic } }
+          border.color: "#c7acd9"
         }
 
         Text {
