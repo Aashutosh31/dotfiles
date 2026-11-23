@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "aashutosh31.astra-workspaces",
+  "name": "Astra Workspaces",
+  "version": "1.0.0",
+  "author": "aashutosh31",
+  "description": "Animated workspace tabs with occupied and focused states",
+  "kinds": [
+    "bar-widget"
+  ],
+  "entryPoints": {
+    "barWidget": "Workspaces.qml"
+  },
+  "barWidget": {
+    "displayName": "Astra Workspaces",
+    "description": "Animated workspace tabs with occupied and focused states",
+    "category": "Compositor",
+    "allowMultiple": false
+  },
+  "omarchy": {
+    "clonedFrom": "omarchy.workspaces"
+  }
+}

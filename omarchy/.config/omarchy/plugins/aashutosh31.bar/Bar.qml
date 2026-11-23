@@ -61,22 +61,22 @@ Item {
   property string fontFamily: Style.font.family
   // Bound to the central Color singleton so the bar tracks shell.toml's
   // [bar] section. Property names kept for the rest of this file's bindings.
-  property color themeForeground: Color.bar.text
+  property color themeForeground: Color.foreground
   property color themeContrastForeground: Color.background
-  property color transparentForeground: Color.bar.text
+  property color transparentForeground: Color.foreground
   property color foreground: themeForeground
   property color barForeground: useTransparentForeground ? transparentForeground : themeForeground
   property bool foregroundAnimationEnabled: true
   property color background: Color.bar.background
   property color urgent: Color.bar.active
-  // A thin atmospheric layer: mostly the palette's #0B0924 background, with
-  // a restrained violet lift so the wallpaper remains the visual focus.
-  property color atmosphericBarTop: Qt.rgba(0.043, 0.035, 0.141, 0.64)
-  property color atmosphericBarBottom: Qt.rgba(0.055, 0.040, 0.160, 0.70)
-  property color atmosphericBarEdge: Qt.rgba(0.565, 0.439, 0.686, 0.16)
-  property color atmosphericBarHighlight: Qt.rgba(0.992, 0.757, 0.835, 0.09)
-  property int atmosphericBarRadius: 12
-  property int atmosphericBarMargin: 4
+  // Astra islands use individual theme-tinted capsules instead of one
+  // screen-wide slab. Keep the old atmospheric surface for vertical layouts.
+  property color atmosphericBarTop: Qt.rgba(0.26, 0.19, 0.34, 0.42)
+  property color atmosphericBarBottom: Qt.rgba(0.11, 0.075, 0.21, 0.52)
+  property color atmosphericBarEdge: Qt.rgba(0.792, 0.651, 0.847, 0.28)
+  property color atmosphericBarHighlight: Qt.rgba(0.992, 0.757, 0.835, 0.05)
+  property int atmosphericBarRadius: 16
+  property int atmosphericBarMargin: 8
 
   Behavior on barForeground { enabled: root.foregroundAnimationEnabled; ColorAnimation { duration: 420; easing.type: Easing.InOutCubic } }
   Behavior on background { ColorAnimation { duration: 420; easing.type: Easing.InOutCubic } }
@@ -334,7 +334,7 @@ Item {
   }
 
   readonly property bool vertical: position === "left" || position === "right"
-  readonly property int barSize: vertical ? Style.bar.sizeVertical : Style.bar.sizeHorizontal + 6
+  readonly property int barSize: vertical ? Style.bar.sizeVertical : Style.bar.sizeHorizontal + 8
 
   function normalizePosition(value) {
     return BarModel.normalizePosition(value)
@@ -1036,7 +1036,7 @@ Item {
       id: atmosphericBarSurface
 
       anchors.fill: parent
-      visible: !root.transparent
+      visible: !root.transparent && root.vertical
       radius: Math.min(root.atmosphericBarRadius, root.vertical ? width / 2 : height / 2)
       gradient: Gradient {
         orientation: root.vertical ? Gradient.Horizontal : Gradient.Vertical
@@ -1055,7 +1055,7 @@ Item {
       anchors.leftMargin: root.atmosphericBarRadius
       anchors.rightMargin: root.atmosphericBarRadius
       anchors.topMargin: 1
-      visible: !root.transparent && !root.vertical
+      visible: false
       height: 1
       radius: 1
       color: root.atmosphericBarHighlight
@@ -1145,17 +1145,55 @@ Item {
       Item {
         anchors.fill: parent
 
+        // Independent backplates make the layout read as three intentional
+        // control islands, with the wallpaper visible between them.
+        Rectangle {
+          z: -1
+          visible: !root.transparent
+          x: leftModules.x - 7
+          y: Math.round((parent.height - height) / 2)
+          width: leftModules.width + 14
+          height: root.barSize - 4
+          radius: height / 2
+          gradient: Gradient {
+            orientation: Gradient.Vertical
+            GradientStop { position: 0.0; color: Qt.rgba(0.28, 0.21, 0.36, 0.42) }
+            GradientStop { position: 1.0; color: Qt.rgba(0.12, 0.085, 0.22, 0.50) }
+          }
+          border.width: 1
+          border.color: Qt.rgba(0.792, 0.651, 0.847, 0.22)
+        }
+
+        Rectangle {
+          z: -1
+          visible: !root.transparent
+          x: rightModules.x - 7
+          y: Math.round((parent.height - height) / 2)
+          width: rightModules.width + 14
+          height: root.barSize - 4
+          radius: height / 2
+          gradient: Gradient {
+            orientation: Gradient.Vertical
+            GradientStop { position: 0.0; color: Qt.rgba(0.28, 0.21, 0.36, 0.42) }
+            GradientStop { position: 1.0; color: Qt.rgba(0.12, 0.085, 0.22, 0.50) }
+          }
+          border.width: 1
+          border.color: Qt.rgba(0.792, 0.651, 0.847, 0.22)
+        }
+
         CenterModules { anchors.fill: parent }
 
         LeftModules {
+          id: leftModules
           anchors.left: parent.left
-          anchors.leftMargin: Style.space(8)
+          anchors.leftMargin: Style.space(12)
           anchors.verticalCenter: parent.verticalCenter
         }
 
         RightModules {
+          id: rightModules
           anchors.right: parent.right
-          anchors.rightMargin: Style.space(8)
+          anchors.rightMargin: Style.space(12)
           anchors.verticalCenter: parent.verticalCenter
         }
       }
@@ -1330,6 +1368,28 @@ Item {
     readonly property bool hasAnchor: root.entryIndex(entries, root.centerAnchor) !== -1
     readonly property var anchorEntry: root.findCenterAnchorEntry()
 
+    function widthFor(id) {
+      for (var i = 0; i < root.moduleSlots.length; i++) {
+        var slot = root.moduleSlots[i]
+        if (slot && slot.region === "center" && slot.moduleName === id && slot.visible && slot.width > 0)
+          return slot.width
+      }
+      return 0
+    }
+
+    readonly property real islandBefore: {
+      var width = 0
+      var before = root.entriesBefore(entries, root.centerAnchor)
+      for (var i = 0; i < before.length; i++) width += widthFor(root.entryId(before[i]))
+      return width
+    }
+    readonly property real islandAnchor: anchorEntry ? widthFor(root.entryId(anchorEntry)) : 0
+    readonly property real islandContentWidth: {
+      var width = 0
+      for (var i = 0; i < entries.length; i++) width += widthFor(root.entryId(entries[i]))
+      return width
+    }
+
     Loader {
       anchors.fill: parent
       sourceComponent: root.vertical ? verticalCenterModules : horizontalCenterModules
@@ -1340,6 +1400,24 @@ Item {
 
       Item {
         anchors.fill: parent
+
+        Rectangle {
+          z: -1
+          visible: !root.transparent
+          x: parent.width / 2 - centerRoot.islandBefore - centerRoot.islandAnchor / 2 - 15
+          y: Math.round((parent.height - height) / 2)
+          width: centerRoot.islandContentWidth + 30
+          height: root.barSize - 2
+          radius: height / 2
+          gradient: Gradient {
+            orientation: Gradient.Vertical
+            GradientStop { position: 0.0; color: Qt.rgba(0.39, 0.27, 0.48, 0.40) }
+            GradientStop { position: 0.48; color: Qt.rgba(0.22, 0.15, 0.32, 0.47) }
+            GradientStop { position: 1.0; color: Qt.rgba(0.12, 0.075, 0.21, 0.56) }
+          }
+          border.width: 1
+          border.color: Qt.rgba(0.992, 0.757, 0.835, 0.28)
+        }
 
         CenterGestureArea { anchors.fill: parent }
 

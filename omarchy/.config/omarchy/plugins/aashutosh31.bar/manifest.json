@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
   "id": "aashutosh31.bar",
-  "name": "My Bar",
-  "version": "1.0.0",
-  "author": "Omarchy",
-  "description": "Status bar with widgets",
+  "name": "Astra Islands",
+  "version": "1.1.0",
+  "author": "Aashutosh31",
+  "description": "A three-island glass status bar with the Astra clock and workspace tabs",
   "kinds": [
     "bar"
   ],

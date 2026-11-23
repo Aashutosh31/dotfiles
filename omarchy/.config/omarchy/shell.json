@@ -1,7 +1,7 @@
 {
   "bar": {
     "background": "opaque",
-    "centerAnchor": "omarchy.clock",
+    "centerAnchor": "aashutosh31.astra-clock",
     "id": "aashutosh31.bar",
     "layout": {
       "center": [
@@ -9,15 +9,15 @@
           "id": "omarchy.indicators"
         },
         {
-          "birthYear": 2005,
-          "format": "ddd d MMM h:mm AP",
-          "formatAlt": "d MMMM 'W'ww yyyy",
-          "id": "omarchy.clock",
-          "lifeExpectancy": 80,
-          "verticalFormat": "HH\n—\nmm"
+          "id": "aashutosh31.media"
         },
         {
-          "id": "aashutosh31.media"
+          "id": "aashutosh31.astra-clock",
+          "birthYear": 2005,
+          "lifeExpectancy": 80,
+          "format": "h:mm AP",
+          "formatAlt": "HH:mm",
+          "verticalFormat": "HH\n—\nmm"
         },
         {
           "id": "omarchy.elsewhen",
@@ -55,7 +55,7 @@
           }
         },
         {
-          "id": "omarchy.weather"
+          "id": "aashutosh31.weather"
         },
         {
           "id": "omarchy.system-update"
@@ -68,7 +68,7 @@
           "id": "omarchy.menu"
         },
         {
-          "id": "omarchy.workspaces"
+          "id": "aashutosh31.astra-workspaces"
         }
       ],
       "right": [

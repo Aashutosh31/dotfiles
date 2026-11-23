@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "aashutosh31.astra-clock",
+  "name": "Astra Clock",
+  "version": "1.0.0",
+  "author": "aashutosh31",
+  "description": "A typographic date and time widget with the Omarchy calendar popup",
+  "kinds": [
+    "bar-widget"
+  ],
+  "entryPoints": {
+    "barWidget": "Clock.qml"
+  },
+  "barWidget": {
+    "displayName": "Astra Clock",
+    "description": "A typographic date and time widget with the Omarchy calendar popup",
+    "category": "Time",
+    "allowMultiple": false
+  },
+  "omarchy": {
+    "clonedFrom": "omarchy.clock"
+  }
+}

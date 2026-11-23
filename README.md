@@ -136,6 +136,29 @@ tmux · VS Code · yazi · zellij · zsh
 This repository includes personal extensions created for **Aashutosh31's own
 Omarchy setup**. They are not part of the original Omarchy distribution.
 
+### `aashutosh31.bar` — Astra Islands
+
+The personal bar clone keeps Omarchy's bar engine and interactions, with a
+Wallhaven-tuned three-island glass aesthetic: menu/workspace tabs on the left,
+an editorial clock and media in the center, and system controls on the right.
+The separate backplates leave wallpaper visible between each group.
+
+The layout uses two companion widgets:
+
+- `aashutosh31.astra-clock` — a typographic clock with the Omarchy calendar
+  popup and format cycling.
+- `aashutosh31.astra-workspaces` — compact animated workspace tabs showing
+  focused and occupied workspaces.
+
+Sources:
+
+```text
+omarchy/.config/omarchy/plugins/aashutosh31.bar/
+omarchy/.config/omarchy/plugins/aashutosh31.astra-clock/
+omarchy/.config/omarchy/plugins/aashutosh31.astra-workspaces/
+omarchy/.config/omarchy/shell.json
+```
+
 ### `aashutosh31.cpu` — CPU bar widget
 
 Created and maintained by **Aashutosh31**. It adds a small live CPU indicator
