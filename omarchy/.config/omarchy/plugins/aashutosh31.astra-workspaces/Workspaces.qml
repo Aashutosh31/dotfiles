@@ -52,8 +52,8 @@ BarWidget {
 
         Rectangle {
           anchors.centerIn: parent
-          width: 22
-          height: 22
+          width: 16
+          height: 16
           radius: width / 2
           visible: tab.focused
           color: "#a485bf"
@@ -67,7 +67,7 @@ BarWidget {
           text: tab.modelData === 10 ? "0" : String(tab.modelData)
           color: tab.focused ? "#160e2d" : (tab.occupied ? "#e7d9ed" : "#a99bb0")
           font.family: root.bar ? root.bar.fontFamily : Style.font.family
-          font.pixelSize: tab.focused ? Style.font.body : Style.font.bodySmall
+          font.pixelSize: Style.font.bodySmall
           font.weight: tab.focused ? Font.DemiBold : Font.Normal
           Behavior on color { ColorAnimation { duration: Style.duration(130) } }
         }
