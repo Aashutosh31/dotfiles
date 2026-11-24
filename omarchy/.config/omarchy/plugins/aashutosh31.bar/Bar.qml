@@ -1662,6 +1662,17 @@ Item {
       if (qmlCustom) return qmlLoader.item
       return componentLoader.item
     }
+    // Some rich bar widgets (currently Superwhisper) expose a live
+    // serviceOn state. Let those opt into the indicator-style hover reveal
+    // without unloading the widget that owns their popup and IPC handler.
+    readonly property bool revealedAsInactiveIndicator:
+      moduleSettings.hideWhenInactive === true
+      && activeItem
+      && ("serviceOn" in activeItem)
+      && activeItem.serviceOn !== true
+      && root.centerSectionRevealHeld !== true
+    readonly property bool moduleVisible:
+      activeItem && activeItem.visible && !revealedAsInactiveIndicator
     readonly property bool hovered: moduleHover.hovered
     readonly property bool dragSource: root.barDragSource === slot
     readonly property bool panelOpen: root.activePopout === slot.activeItem
@@ -1675,8 +1686,8 @@ Item {
       if (hint !== undefined && hint !== null && hint > 0) return Math.round(hint)
       return Math.max(Style.space(10), Math.round((root.vertical ? slot.height : slot.width) * 0.55))
     }
-    implicitWidth: activeItem && activeItem.visible ? (root.vertical ? root.barSize : activeItem.implicitWidth) : 0
-    implicitHeight: activeItem && activeItem.visible ? activeItem.implicitHeight : 0
+    implicitWidth: moduleVisible ? (root.vertical ? root.barSize : activeItem.implicitWidth) : 0
+    implicitHeight: moduleVisible ? activeItem.implicitHeight : 0
     width: implicitWidth
     height: implicitHeight
     z: modulePointer.dragging ? 100 : 0

@@ -9,7 +9,8 @@
           "id": "omarchy.indicators"
         },
         {
-          "id": "superwhisper.panel"
+          "id": "superwhisper.panel",
+          "hideWhenInactive": true
         },
         {
           "id": "aashutosh31.astra-clock",
