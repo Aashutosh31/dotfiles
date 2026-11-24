@@ -9,9 +9,6 @@
           "id": "omarchy.indicators"
         },
         {
-          "id": "aashutosh31.media"
-        },
-        {
           "id": "aashutosh31.astra-clock",
           "birthYear": 2005,
           "lifeExpectancy": 80,
@@ -56,6 +53,9 @@
         },
         {
           "id": "aashutosh31.weather"
+        },
+        {
+          "id": "aashutosh31.media"
         },
         {
           "id": "omarchy.system-update"
