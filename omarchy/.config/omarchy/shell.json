@@ -9,6 +9,9 @@
           "id": "omarchy.indicators"
         },
         {
+          "id": "superwhisper.panel"
+        },
+        {
           "id": "aashutosh31.astra-clock",
           "birthYear": 2005,
           "lifeExpectancy": 80,
@@ -77,9 +80,6 @@
         },
         {
           "id": "omarchy.tray"
-        },
-        {
-          "id": "superwhisper.panel"
         },
         {
           "id": "omarchy.agents"
