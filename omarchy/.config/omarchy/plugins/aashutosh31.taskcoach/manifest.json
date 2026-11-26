@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "aashutosh31.taskcoach",
+  "name": "Task Coach",
+  "version": "1.0.0",
+  "author": "Aashutosh31",
+  "license": "MIT",
+  "description": "A local-first task list with persistent due reminders and quick snoozes.",
+  "kinds": ["bar-widget"],
+  "activation": "on-demand",
+  "entryPoints": {
+    "barWidget": "Panel.qml"
+  },
+  "barWidget": {
+    "displayName": "Task Coach",
+    "description": "Local tasks, persistent reminders, and playful nudges.",
+    "category": "Productivity",
+    "aliases": ["tasks", "todo", "task coach"],
+    "allowMultiple": false,
+    "defaultSection": "right"
+  }
+}

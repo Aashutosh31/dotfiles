@@ -261,6 +261,36 @@ Install it on any Omarchy machine with:
 omarchy plugin add https://github.com/Aashutosh31/omarchy-media-deck.git --enable
 ```
 
+### `aashutosh31.taskcoach` — local Task Coach
+
+Task Coach is a local-first task and reminder widget in the right side of the
+bar. It supports priorities, exact due times, edit/complete/undo/delete, and
+persistent due notifications with Done, Not yet, and 30-minute Later actions.
+Other snooze intervals remain available in the panel. Deadlines use wall-clock
+time and overdue tasks are picked up after the laptop wakes from suspend.
+
+Tasks stay on the device in `$XDG_DATA_HOME/omarchy-task-coach/tasks.json`
+(normally `~/.local/share/omarchy-task-coach/tasks.json`); Task Coach makes no
+network requests. A short sound-theme cue plays when available.
+
+Source:
+
+```text
+omarchy/.config/omarchy/plugins/aashutosh31.taskcoach/
+```
+
+Published as a standalone MIT-licensed plugin:
+
+```text
+https://github.com/Aashutosh31/omarchy-task-coach
+```
+
+Install it on any Omarchy machine with:
+
+```bash
+omarchy plugin add https://github.com/Aashutosh31/omarchy-task-coach.git --enable
+```
+
 ---
 
 ## 📥 Installation
