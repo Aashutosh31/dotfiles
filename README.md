@@ -285,6 +285,8 @@ Published as a standalone MIT-licensed plugin:
 https://github.com/Aashutosh31/omarchy-task-coach
 ```
 
+Screenshots: [Task panel](https://github.com/Aashutosh31/omarchy-task-coach/blob/main/screenshots/task-coach-panel.png) · [Due reminder](https://github.com/Aashutosh31/omarchy-task-coach/blob/main/screenshots/task-coach-reminder.png)
+
 Install it on any Omarchy machine with:
 
 ```bash
