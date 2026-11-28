@@ -1,0 +1,11 @@
+# Runtime state and local test output
+cache/
+tmp/
+*.log
+.env
+.env.*
+*.state
+*.json.tmp
+__pycache__/
+.pytest_cache/
+.coverage

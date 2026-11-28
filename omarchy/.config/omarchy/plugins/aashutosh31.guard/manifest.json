@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "aashutosh31.guard",
+  "name": "Omarchy Guard",
+  "version": "0.1.0",
+  "author": "Aashutosh31",
+  "license": "MIT",
+  "description": "Local system health and security center for agents, hardware, and SSH activity.",
+  "kinds": ["bar-widget"],
+  "activation": "on-demand",
+  "entryPoints": {
+    "barWidget": "BarWidget.qml"
+  },
+  "barWidget": {
+    "displayName": "Guard",
+    "description": "Watch AI agents, hardware health, and local security events.",
+    "category": "System",
+    "aliases": ["guard", "health", "security", "agents"],
+    "allowMultiple": false,
+    "defaultSection": "right"
+  }
+}

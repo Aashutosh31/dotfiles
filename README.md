@@ -293,6 +293,35 @@ Install it on any Omarchy machine with:
 omarchy plugin add https://github.com/Aashutosh31/omarchy-task-coach.git --enable
 ```
 
+### `aashutosh31.guard` — Omarchy Guard
+
+Omarchy Guard is a local-first health and security center for the Omarchy bar.
+Its popup summarizes AI-agent processes, SSH and sudo events, listening ports,
+hardware health, and a 15-minute CPU/RAM flight recorder. Host addresses and
+credential-shaped strings are redacted in the backend output; process command
+lines are not displayed. The plugin makes no network requests and never invokes
+`sudo`.
+
+Source:
+
+```text
+omarchy/.config/omarchy/plugins/aashutosh31.guard/
+```
+
+Published as a standalone MIT-licensed plugin:
+
+```text
+https://github.com/Aashutosh31/omarchy-guard
+```
+
+Preview: [Guard dashboard](https://github.com/Aashutosh31/omarchy-guard/blob/main/preview.png)
+
+Install it on any Omarchy machine with:
+
+```bash
+omarchy plugin add https://github.com/Aashutosh31/omarchy-guard.git --enable
+```
+
 ---
 
 ## 📥 Installation
